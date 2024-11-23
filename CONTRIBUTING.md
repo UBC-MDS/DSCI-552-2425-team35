@@ -1,4 +1,4 @@
-# Contributing to the Breast Bank Marketing project
+# Contributing to the Heart_disease_diagnostic project
 
 We welcome all contributions to this project!
 If you notice a bug, or have a feature request,

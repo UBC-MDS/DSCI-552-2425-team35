@@ -15,6 +15,9 @@ dependencies:
   - python-graphviz
   - nltk
   - imbalanced-learn
+  - vegafusion==1.6.9
+  - vegafusion-python-embed==1.6.9
+  - vl-convert-python>=1.6.0
   - pip:
       - altair-ally==0.1.1
       - seaborn==0.13.2

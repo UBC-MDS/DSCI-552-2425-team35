@@ -21,7 +21,6 @@ metadata:
     used_env_vars: []
   platforms:
   - osx-arm64
-  - osx-arm64
   sources:
   - environment.yml
 package:

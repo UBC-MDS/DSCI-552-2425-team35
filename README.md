@@ -2,7 +2,7 @@
 Contributors: Sarah Eshafi, Hui Tang, Long Nguyen, Marek Boulerice
 
 ## About
-[a short summary of the project (view from 10,000 feet)]
+This repository covers a machine learning model analysis with a goal to predict angiographic coronary disease in patients. Data is pulled from patients undergoing angiography at the Cleveland Clinic in Ohio. This analysis is composed of Exploratory Data Analysis, testing of various machine models on a training data set, model optimization via hyperparameter, and final model performance analysis. The final model is shown to have promising results, though limitations apply and further testing and optimization is recommended.
 
 ## Running the Report
 To run the analysis for the first time, run the following from the root of this repository:

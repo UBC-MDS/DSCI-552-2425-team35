@@ -3,21 +3,21 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python>=3.11,<3.13
-  - pip
-  - ipykernel
-  - nb_conda_kernels
-  - scipy
-  - matplotlib>=3.2.2
-  - scikit-learn
-  - requests>=2.24.0
-  - graphviz
-  - python-graphviz
-  - nltk
-  - imbalanced-learn
+  - python==3.12.7
+  - pip==24.3.1
+  - ipykernel==6.29.5
+  - nb_conda_kernels==2.5.1
+  - scipy=1.14.1
+  - matplotlib==3.9.2
+  - scikit-learn==1.5.2
+  - requests==2.32.3
+  - graphviz==12.0.0
+  - python-graphviz==0.20.3
+  - nltk==3.9.1
+  - imbalanced-learn==0.12.4
   - vegafusion==1.6.9
   - vegafusion-python-embed==1.6.9
-  - vl-convert-python>=1.6.0
+  - vl-convert-python==1.7.0
   - pip:
       - altair-ally==0.1.1
       - seaborn==0.13.2

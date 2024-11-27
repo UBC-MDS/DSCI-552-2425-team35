@@ -19,6 +19,7 @@ dependencies:
   - vegafusion-python-embed==1.6.9
   - vl-convert-python==1.7.0
   - panderas==0.21.0
+  - ucimlrepo==0.0.7
   - pip:
       - altair-ally==0.1.1
       - seaborn==0.13.2

@@ -1,27 +1,22 @@
-name: '522'
+name: '552'
 channels:
   - conda-forge
-  - defaults
 dependencies:
-  - python==3.12.7
-  - pandas==2.2.2
-  - pip==24.3.1
-  - ipykernel==6.29.5
-  - nb_conda_kernels==2.5.1
+  - python=3.11
+  - pandas=2.2.3
+  - pip=24.3.1
+  - ipykernel=6.29.5
   - scipy=1.14.1
-  - matplotlib==3.9.2
-  - scikit-learn==1.5.2
-  - requests==2.32.3
-  - graphviz==12.0.0
-  - python-graphviz==0.20.3
-  - nltk==3.9.1
-  - imbalanced-learn==0.12.4
-  - vegafusion==1.6.9
-  - vegafusion-python-embed==1.6.9
-  - vl-convert-python==1.7.0
-  - pandera==0.21.0
-  - ucimlrepo==0.0.7
-  - pip:
-      - altair-ally==0.1.1
-      - seaborn==0.13.2
-      - ucimlrepo==0.0.7
+  - matplotlib=3.9.2
+  - scikit-learn=1.5.2
+  - requests=2.32.3
+  - graphviz=12.0.0
+  - python-graphviz=0.20.3
+  - nltk=3.9.1
+  - imbalanced-learn=0.12.4
+  - vegafusion=1.6.9
+  - vegafusion-python-embed=1.6.9
+  - vl-convert-python=1.7.0
+  - pandera=0.21.0
+  - six=1.16.0
+  - ucimlrepo=0.0.7

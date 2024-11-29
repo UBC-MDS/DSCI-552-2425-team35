@@ -22,3 +22,5 @@ dependencies:
   - ucimlrepo=0.0.7
   - pip:
       - deepchecks==0.18.1
+      - altair-ally==0.1.1
+      - seaborn==0.13.2

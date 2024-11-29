@@ -1,0 +1,13 @@
+services:
+  # run jupyter notebook inside jupyter 
+  jupyter-notebook:
+    image:  piloxita/dsci-522-2425-team35-heart_disease_diagnostic_machine:67b1958
+    ports:
+      - "9999:8888"
+    volumes:
+      - .:/home/jovyan
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+    platform: linux/amd64

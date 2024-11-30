@@ -5,19 +5,22 @@ Contributors: Sarah Eshafi, Hui Tang, Long Nguyen, Marek Boulerice
 This repository covers a machine learning model analysis with a goal to predict angiographic coronary disease in patients. Data is pulled from patients undergoing angiography at the Cleveland Clinic in Ohio. This analysis is composed of Exploratory Data Analysis, testing of various machine models on a training data set, model optimization via hyperparameter, and final model performance analysis. The final model is shown to have promising results, though limitations apply and further testing and optimization is recommended.
 
 ## Running the Report
-To run the analysis for the first time, run the following from the root of this repository:
+To run the analysis:
+#### 1\. Using Docker
 
-`conda-lock install --name breast-cancer-predictor conda-lock_[YOUR OS].yml`
+*note - the instructions in this section also depends on running this in
+a unix shell (e.g., terminal or Git Bash)*
 
-Replace `[YOUR OS]` with the yml file name containing your operating system.
+To replicate the analysis, install
+[Docker](https://www.docker.com/get-started). Then clone this GitHub
+repository and run the following command at the command line/terminal
+from the root directory of this project:
 
-Then, run the following from the root of this repository:
+    docker compose up
 
-`jupyter lab`
-
-Upon opening jupyter lab (or your preferred Python IDE), open `heart_diagnostic_analysis.ipynb` and switch your kernel to "Python [conda env:522]".
-
-Finally, click "Restart kernel and run all cells" to view the analysis.
+Copy the link from the output and paste it to your browser and change the port number from `8888` to `9999` to launch jupyter notebook.
+![Jupyter-lab]('img/jl-link.png')
+![Jupyter-lab]('img/9999.png')
 
 ## Dependencies
 - conda (version 24.7.1 or higher)

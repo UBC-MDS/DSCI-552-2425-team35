@@ -18,8 +18,10 @@ from the root directory of this project:
 
     docker compose up
 
-Copy the link from the output and paste it to your browser and change the port number from `8888` to `9999` to launch jupyter notebook.
+Copy the link from the output (the link would look like below)
 ![Jupyter-lab](img/jl-link.png)
+
+and paste it to your browser and change the port number from `8888` to `9999` to launch jupyter notebook.
 ![Jupyter-lab](img/9999.png)
 
 ## Dependencies

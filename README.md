@@ -19,8 +19,8 @@ from the root directory of this project:
     docker compose up
 
 Copy the link from the output and paste it to your browser and change the port number from `8888` to `9999` to launch jupyter notebook.
-![Jupyter-lab]('img/jl-link.png')
-![Jupyter-lab]('img/9999.png')
+![Jupyter-lab](img/jl-link.png)
+![Jupyter-lab](img/9999.png)
 
 ## Dependencies
 - conda (version 24.7.1 or higher)

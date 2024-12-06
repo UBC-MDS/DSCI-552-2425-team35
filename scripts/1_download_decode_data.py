@@ -1,4 +1,4 @@
-# download_data.py
+# 1_download_decode_data.py
 # author: Sarah Eshafi
 # date: 2024-12-05
 
@@ -6,7 +6,6 @@ import click
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-#from src.read_zip import read_zip
 from ucimlrepo import fetch_ucirepo
 import pandas as pd
 
@@ -15,7 +14,7 @@ import pandas as pd
 @click.option('--write-to', type=str, help="Path to directory where raw data will be written to")
 
 def main(id, write_to):
-    """Downloads data zip data from the web to a local filepath and extracts it."""
+    """Downloads data from the UCI package to a local filepath and decodes variables and column headers."""
     # fetch dataset
     heart_disease = fetch_ucirepo(id=id) 
     data = heart_disease.data

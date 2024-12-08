@@ -30,7 +30,7 @@ def main(train, test, write_to):
     # Ensure necessary directories exist
     os.makedirs(os.path.join(write_to, "tables"), exist_ok=True)
     os.makedirs(os.path.join(write_to, "models"), exist_ok=True)
-    os.makedirs(os.path.join(write_to, "figs"), exist_ok=True)
+    os.makedirs(os.path.join(write_to, "figures"), exist_ok=True)
 
     # Load train and test data
     train_data = pd.read_csv(train)
@@ -137,7 +137,7 @@ def main(train, test, write_to):
 
     # Save confusion matrix
     confmat = ConfusionMatrixDisplay.from_estimator(best_model, X_test, y_test, values_format="d")
-    plt.savefig(os.path.join(write_to, "figs", "confusion_matrix.png"))
+    plt.savefig(os.path.join(write_to, "figures", "confusion_matrix.png"))
     plt.close()
 
 if __name__ == '__main__':

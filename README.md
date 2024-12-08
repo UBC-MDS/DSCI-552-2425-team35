@@ -37,8 +37,7 @@ python scripts/4_training_models.py --train data/processed/train_df.csv --write-
 
 python scripts/5_evaluate.py --train data/processed/train_df.csv --test data/processed/test_df.csv --write-to results
 
-quarto render report/heart_diagnostic_analysis.qmd --to html
-quarto render report/heart_diagnostic_analysis.qmd --to pdf
+quarto render reports/heart_diagnostic_analysis.qmd --to html
 ```
 
 #### 3\. Clean Up

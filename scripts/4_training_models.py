@@ -24,21 +24,18 @@ from sklearn.metrics import (make_scorer, precision_score, recall_score, f1_scor
 
 @click.command()
 @click.option('--train', type=str, help="Location of train data file")
-@click.option('--test', type=str, help="Location of test data file")
 @click.option('--write-to', type=str, help="Path to master directory where outputs will be written")
-def main(train, test, write_to):
+def main(train, write_to):
     # Ensure necessary directories exist
     os.makedirs(os.path.join(write_to, "tables"), exist_ok=True)
     os.makedirs(os.path.join(write_to, "models"), exist_ok=True)
     os.makedirs(os.path.join(write_to, "figures"), exist_ok=True)
 
-    # Load train and test data
+    # Load train data
     train_data = pd.read_csv(train)
-    test_data = pd.read_csv(test)
 
     # Split data into features and labels
     X_train, y_train = train_data.drop(columns='target'), train_data['target']
-    X_test, y_test = test_data.drop(columns='target'), test_data['target']
 
     # 1. DATA PREPROCESSOR
     categorical_features = [
@@ -116,29 +113,6 @@ def main(train, test, write_to):
     # Save the best model
     with open(os.path.join(write_to, "models", "disease_pipeline.pickle"), 'wb') as f:
         pickle.dump(best_model, f)
-    
-    # Evaluate the model
-    train_predictions = best_model.predict(X_train)
-    test_predictions = best_model.predict(X_test)
-    metrics_df = pd.DataFrame({
-        'Metric': ['F1 Score', 'Recall', 'Accuracy'],
-        'Train': [
-            f1_score(y_train, train_predictions, pos_label='> 50% diameter narrowing'),
-            recall_score(y_train, train_predictions, pos_label='> 50% diameter narrowing'),
-            best_model.score(X_train, y_train),
-        ],
-        'Test': [
-            f1_score(y_test, test_predictions, pos_label='> 50% diameter narrowing'),
-            recall_score(y_test, test_predictions, pos_label='> 50% diameter narrowing'),
-            best_model.score(X_test, y_test),
-        ],
-    })
-    metrics_df.to_csv(os.path.join(write_to, "tables", "model_metrics.csv"), index=False)
-
-    # Save confusion matrix
-    confmat = ConfusionMatrixDisplay.from_estimator(best_model, X_test, y_test, values_format="d")
-    plt.savefig(os.path.join(write_to, "figures", "confusion_matrix.png"))
-    plt.close()
 
 if __name__ == '__main__':
     main()

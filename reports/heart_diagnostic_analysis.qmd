@@ -21,7 +21,7 @@ though limitations apply and further testing and optimization is recommended.
 ## 2. INTRODUCTION
 Heart disease is the leading cause of death worldwide. 
 Treating these heart diseases depends on capability of detecting symptoms and diagnosing cases earlier. 
-One complication to diagnosing heart diseases is that many cases are found to be aymptomatic (Master et al, 1969). 
+One complication to diagnosing heart diseases is that many cases are found to be aymptomatic [@asymptomatic_coronary_disease]. 
 This creates an opportunity for application of machine learning methods,
 where the following question can be asked:
 Given various details about a clients medical status, 
@@ -31,7 +31,7 @@ To be best suited to the problem, the model should retain a high accuracy while 
 (ie predicting that a patient does not have the heart disease when the patient in fact does).
 
 In particular, this analysis focuses on detection of angiographic coronary disease. 
-The data set used in creating our model was taken from 303 patients undergoing angiography Cleveland Clinic in Cleveland, Ohio [@heart_disease_45] (Janosi et al, 1989).
+The data set used in creating our model was taken from 303 patients undergoing angiography Cleveland Clinic in Cleveland, Ohio [@heart_disease_45].
 From this procedure, a set of parameters were collected about each patients, 
 and a diagnosis of whether the patient had the angiographic coronary disease (signified by a diameter narrowing of the coronary artery by at least 50%).
 This is to serve as the target variable in our analysis

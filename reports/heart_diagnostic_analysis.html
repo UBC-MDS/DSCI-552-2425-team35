@@ -113,13 +113,14 @@ div.csl-indent {
 <li><strong>Thalassemia</strong> : categorical feature indicating if patient suffered from Thalassemia</li>
 </ul>
 <p>The following sections will discuss the decisions made and results in our Exploratory Data analysis, Machine learning model training, and final model performance</p>
+<p>This report also drew information from the study done by <span class="citation" data-cites="O">(<a href="#ref-O" role="doc-biblioref"><strong>O?</strong></a>’Flaherty2008)</span> and <span class="citation" data-cites="thalassemia">(<a href="#ref-thalassemia" role="doc-biblioref">Athanasios Aessopos 2007</a>)</span></p>
 </section>
 <section id="data-validation-cleaning" class="level2">
 <h2 class="anchored" data-anchor-id="data-validation-cleaning">3. DATA VALIDATION &amp; CLEANING</h2>
 <p>Prior to performing our analysis, an initial validation and cleaning step was performed on the data.</p>
 <section id="initial-data-cleaning" class="level3">
 <h3 class="anchored" data-anchor-id="initial-data-cleaning">INITIAL DATA CLEANING</h3>
-<p>From an initial preview of the data, some issues were correct immediately, before performing formal data validation. This includes: 1. Removing invalid target values (i.e.&nbsp;values above 2) and converting the values to their semantic meaning.</p>
+<p>From an initial preview of the data, some issues were correct immediately, before performing formal data validation. This includes removing invalid target values (i.e.&nbsp;values above 2) and converting the values to their semantic meaning.</p>
 <p>Next, we evaluated whether the features in the train and test dataset are distributed similarly using deepchecks. The check concluded that that the features were not distributed significantly and our distributions are as expected.</p>
 </section>
 </section>
@@ -129,7 +130,8 @@ div.csl-indent {
 <p>EDA is first conducted to obtain an idea of feature importance and to establish any important correlations to watch for. Machine learning analysis is then performed, where multiple models are tested and their performance compared. The best performing model is selected to proceed with. On this model, hyperparameter test is completed via random search to tune our model and obtain best results. Finally, the model is trained and tested on a separate data set, and evaluated for performance.</p>
 <section id="eda" class="level3">
 <h3 class="anchored" data-anchor-id="eda">4.1 EDA</h3>
-<p>In this section, preliminary analysis is conducted to obtain an idea of possible correlations between features to be on the look out for</p>
+<p>In this section, preliminary analysis is conducted to obtain an idea of possible correlations between features to be on the look out for. the results are presented below:</p>
+<p><img src=".png" class="img-fluid"> -figure of eda</p>
 </section>
 </section>
 <section id="ml-analysis" class="level2">
@@ -141,20 +143,24 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="data-preprocessing">4.2.2. Data Preprocessing</h3>
 <p>Features are sorted by type, and a column transformer object is created. on categorical columns, simple imputing is applied filling missing values with the most frequently occuring value. One hot encoding is then performed.</p>
 <p>For numerical feature, standard scaling is applied to keep all features within the same range</p>
+<p><img src=".png" class="img-fluid"> - table of data head</p>
 </section>
 <section id="model-creation" class="level3">
 <h3 class="anchored" data-anchor-id="model-creation">4.2.3. model creation</h3>
 <p>Basic models (default hyperparameter values) are now generated. A dummy model is first created to use as a baseline to use for comparison. Then, a logistic regressor and support vector classifier model is created. 5-fold cross validation (CV) is performed on each model and scores are returned.</p>
 <p>As discussed above, F1 score is to be the primary metric to evaluate model performance, with precision as a secondary metric. this is reflected in the scoring metrics used in CV</p>
 <p>Finally, a Confusion matrix is generated for each model to give an idea of false positive vs false negative rate.</p>
+<p><img src=".png" class="img-fluid"> -image of confusion matrix</p>
 </section>
 <section id="balanced-model-testing" class="level3">
 <h3 class="anchored" data-anchor-id="balanced-model-testing">4.2.4. Balanced model testing</h3>
 <p>Step 4.2.3 is repeated, this time creating balanced logistic regressor and SVC models, with all other hyperparameters held the same. Confusion matrices are once again generated. The goal of this step is to gain an understanding of how much accuracy is sacrificed at the benefit of improving F1 score.</p>
+<p><img src=".png" class="img-fluid"> - confusion matrix image</p>
 </section>
 <section id="model-evaluation" class="level3">
 <h3 class="anchored" data-anchor-id="model-evaluation">4.2.5. Model Evaluation</h3>
 <p>With baseline models created, they are evaluated according to the criteria set above. CV scores of each model are presented below. First, standard deviation is shown verify there are no abnormally performing models. Scores are then presented in the table below</p>
+<p>[table of model scores]</p>
 </section>
 <section id="model-evaluation-and-selection" class="level3">
 <h3 class="anchored" data-anchor-id="model-evaluation-and-selection">Model evaluation and selection</h3>
@@ -166,7 +172,8 @@ div.csl-indent {
 </section>
 <section id="hyperparameter-optimization-results" class="level3">
 <h3 class="anchored" data-anchor-id="hyperparameter-optimization-results">Hyperparameter optimization results</h3>
-<p>The hyperparameter optimization made a difference <strong>(‘mean_test_score’ (0.58) compared to ‘mean_test_score of cross’ (0.54) of previous mean validation score)</strong>. However, the cross-validation scores among the top three models are approximately equivalent. This suggests that the model’s performance is relatively stable across the parameter space, indicating that further tuning may not yield substantial improvements.</p>
+<p>[] hyper param table</p>
+<p>The hyperparameter optimization made a difference <strong>(‘mean_test_score’ (0.58) [inline code] compared to ‘mean_test_score of cross’ (0.54) [inline code] of previous mean validation score)</strong>. However, the cross-validation scores among the top three models are approximately equivalent. This suggests that the model’s performance is relatively stable across the parameter space, indicating that further tuning may not yield substantial improvements.</p>
 </section>
 <section id="final-model-scoring-and-evaluation" class="level3">
 <h3 class="anchored" data-anchor-id="final-model-scoring-and-evaluation">4.2.7 Final model Scoring and Evaluation</h3>
@@ -175,7 +182,7 @@ div.csl-indent {
 </section>
 <section id="resultsdiscussion" class="level2">
 <h2 class="anchored" data-anchor-id="resultsdiscussion">5. Results/Discussion:</h2>
-<p>The model created is promising. Applying it on our data set gave approximately 68 percent accuracy. This value is close to our baseline dummy accuracy, however with hyper parameter tuning the model achieved a higher F1 score compared to original model (0.68 on train F1 score compared to 0.61 F1 score for base model cv score). The final F1 score on test data is found to be 0.533. Most importantly for our application, the final model performed moderately well at minimizing false negatives. The Recall score for our final model applied to the training data set was 0.830, (improving from the 0.73 recall of the original model). On our testing data set, the model performed moderately well, returning a recall value of 0.500.</p>
+<p>The model created is promising. Applying it on our data set gave approximately 68 [inline code] percent accuracy. This value is close to our baseline dummy accuracy, however with hyper parameter tuning the model achieved a higher F1 score compared to original model (0.68 [inline code] on train F1 score compared to 0.61 [inline code] F1 score for base model cv score). The final F1 score on test data is found to be 0.533 [inlinecode]. Most importantly for our application, the final model performed moderately well at minimizing false negatives. The Recall score for our final model applied to the training data set was 0.830, (improving from the 0.73 [inline code] recall of the original model). On our testing data set, the model performed moderately well, returning a recall value of 0.500 [inline code].</p>
 <p>The discrepancy between training and testing score may be due to the fact that the test data set was quite small (22 examples). To get more rigorous performance testing and confidence in our result, it would be recommended to seek further data.</p>
 </section>
 <section id="conclusion" class="level2">
@@ -194,6 +201,9 @@ div.csl-indent {
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">7. References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-thalassemia" class="csl-entry" role="listitem">
+Athanasios Aessopos, Dimitrios Farmakis, Maria Kati. 2007. <span>“Heart Disease in Thalassemia Intermedia: A Review of the Underlying Pathophysiology.”</span> <a href="https://haematologica.org/article/view/4438">https://haematologica.org/article/view/4438</a>.
+</div>
 <div id="ref-heart_disease_45" class="csl-entry" role="listitem">
 Janosi, Steinbrunn, Andras, and Robert Detrano. 1989. <span>“<span>Heart Disease</span>.”</span> UCI Machine Learning Repository.
 </div>

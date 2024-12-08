@@ -57,6 +57,8 @@ used as our features for model training, are as follows:
 
 The following sections will discuss the decisions made and results in our Exploratory Data analysis, Machine learning model training, and final model performance
 
+This report also drew information from the study done by [@OFlaherty2008] and [@thalassemia]
+
 
 ## 3. DATA VALIDATION & CLEANING
 

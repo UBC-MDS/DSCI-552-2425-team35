@@ -3,6 +3,7 @@ title: "Creating Machine learning Model to Predict Presence of Coronary Artery D
 author: "Marek Boulerice, Sarah Eshafi, Long Nguyen, Hui Tang"
 format: html
 editor: source
+bibliography: references.bib
 ---
 
 ## 1. SUMMARY
@@ -30,7 +31,7 @@ To be best suited to the problem, the model should retain a high accuracy while 
 (ie predicting that a patient does not have the heart disease when the patient in fact does).
 
 In particular, this analysis focuses on detection of angiographic coronary disease. 
-The data set used in creating our model was taken from 303 patients undergoing angiography Cleveland Clinic in Cleveland, Ohio (Janosi et al, 1989).
+The data set used in creating our model was taken from 303 patients undergoing angiography Cleveland Clinic in Cleveland, Ohio [@heart_disease_45] (Janosi et al, 1989).
 From this procedure, a set of parameters were collected about each patients, 
 and a diagnosis of whether the patient had the angiographic coronary disease (signified by a diameter narrowing of the coronary artery by at least 50%).
 This is to serve as the target variable in our analysis
@@ -234,7 +235,3 @@ larger data sets before proceeding with it.
 
 ## 7. References
 
-1. Janosi, A., et al. "Heart Disease Data Set." UCI Machine Learning Repository, 30 June 1988, https://archive.ics.uci.edu/dataset/45/heart+disease.
-2. O'Flaherty, M., et al. "Coronary heart disease trends in England and Wales from 1984 to 2004: concealed levelling of mortality rates among young adults." Heart BMJ Journals, 1 January 2008, https://hdl.handle.net/10536/DRO/DU:30020483.
-3. Master A.M. and Geller, A.J. "The Extent of Completely Asymptomatic Coronary Artery Disease." The American Journal of Cardiology, 1 February 1969, https://doi.org/10.1016/0002-9149(69)90064-2.
-4. Aessopos, A., et al. "Heart Disease in Thalassemia Intermedia: a review of the underlying pathophysiology." Progress in Hematology, 1 May 2007, https://doi.org/10.3324/haematol.10915.

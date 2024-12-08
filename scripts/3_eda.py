@@ -2,41 +2,30 @@ import click
 import os
 import pandas as pd
 import altair as alt
-import aly
+import altair_ally as aly
 
 @click.command()
 @click.option(
-    '--train_path',
+    '--train',
     default='data/processed/train_df.csv',
     type=click.Path(exists=True),
     help='Path to the input training CSV file.'
 )
 @click.option(
-    '--test_path',
-    default='data/processed/test_df.csv',
-    type=click.Path(exists=True),
-    help='Path to the input testing CSV file.'
-)
-@click.option(
-    '--output_dir',
-    default='results/figures/',
+    '--write-to',
+    default='results',
     type=click.Path(),
     help='Directory where output figures will be saved.'
 )
-def main(train_path, test_path, output_dir):
+def main(train, write_to):
     # Ensure output directory exists
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(os.path.join(write_to, "figures"), exist_ok=True)
 
     # Load data
-    train_df = pd.read_csv(train_path, index_col=0)
-    test_df = pd.read_csv(test_path, index_col=0)
+    train_df = pd.read_csv(train)
 
     # EDA Steps:
     print(train_df.info())
-
-    # Clean column names
-    train_df.columns = train_df.columns.str.strip().str.lower().str.replace(" ", "_", regex=False)
-    test_df.columns = test_df.columns.str.strip().str.lower().str.replace(" ", "_", regex=False)
 
     # Altair configurations
     alt.data_transformers.enable('default', max_rows=None)
@@ -44,62 +33,71 @@ def main(train_path, test_path, output_dir):
 
     # Univariate distribution for quantitative variables
     numeric_columns = [
-        'age_(in_years)',
-        'resting_blood_pressure_(in_mm_hg_on_admission_to_the_hospital)',
-        'serum_cholesterol_(in_mg/dl)',
-        'maximum_heart_rate_achieved',
-        'st_depression_induced_by_exercise_relative_to_rest',
-        'number_of_major_vessels_(0–3)_colored_by_fluoroscopy'
+        'Age (in years)',
+        'Resting blood pressure (in mm Hg on admission to the hospital)',
+        'Serum cholesterol (in mg/dl)',
+        'Maximum heart rate achieved',
+        'ST depression induced by exercise relative to rest',
+        'Number of major vessels (0–3) colored by fluoroscopy'
     ]
 
     # Visualization for numeric columns
     numeric_dist_plot = aly.dist(
-        train_df[numeric_columns + ['diagnosis_of_heart_disease']],
-        color='diagnosis_of_heart_disease'
+        train_df[numeric_columns + ['Diagnosis of heart disease']],
+        color='Diagnosis of heart disease'
     )
-    numeric_dist_plot.save(f"{output_dir}/numeric_distributions.png")
+    numeric_dist_plot.save(os.path.join(write_to, "figures", "numeric_distributions.png"))
 
     categorical_columns = [
-        'sex', 
-        'chest_pain_type', 
-        'fasting_blood_sugar_>_120_mg/dl', 
-        'resting_electrocardiographic_results',
-        'exercise-induced_angina', 
-        'slope_of_the_peak_exercise_st_segment', 
-        'thalassemia'
+        'Sex', 
+        'Chest pain type', 
+        'Fasting blood sugar > 120 mg/dl', 
+        'Resting electrocardiographic results',
+        'Exercise-induced angina', 
+        'Slope of the peak exercise ST segment', 
+        'Thalassemia'
     ]
 
     # Visualize categorical variables
     categorical_dist_plot = aly.dist(
-        train_df[categorical_columns + ['diagnosis_of_heart_disease']]
-        .assign(diagnosis_of_heart_disease=lambda x: x['diagnosis_of_heart_disease'].astype(object)), 
+        train_df[categorical_columns + ['Diagnosis of heart disease']]
+        .assign(diagnosis_of_heart_disease=lambda x: x['Diagnosis of heart disease'].astype(object)), 
         dtype='object', 
-        color='diagnosis_of_heart_disease'
+        color='Diagnosis of heart disease'
     )
-    categorical_dist_plot.save(f"{output_dir}/categorical_distributions.png")
+    categorical_dist_plot.save(os.path.join(write_to, "figures", "categorical_distributions.png"))
 
     # Pairwise correlations for the numeric variables
     correlation_plot = aly.corr(train_df[numeric_columns])
-    correlation_plot.save(f"{output_dir}/correlation_matrix.png")
+    correlation_plot.save(os.path.join(write_to, "figures", "correlation_matrix.png"))
 
     # Select numeric columns with at least one high correlation
     columns_with_at_least_one_high_corr = [
-        'age_(in_years)',
-        'resting_blood_pressure_(in_mm_hg_on_admission_to_the_hospital)',
-        'serum_cholesterol_(in_mg/dl)',
-        'maximum_heart_rate_achieved',
-        'st_depression_induced_by_exercise_relative_to_rest',
-        'number_of_major_vessels_(0–3)_colored_by_fluoroscopy',
-        'diagnosis_of_heart_disease'
+        'Age (in years)',
+        'Resting blood pressure (in mm Hg on admission to the hospital)',
+        'Serum cholesterol (in mg/dl)',
+        'Maximum heart rate achieved',
+        'ST depression induced by exercise relative to rest',
+        'Number of major vessels (0–3) colored by fluoroscopy',
+        'Diagnosis of heart disease'
     ]
 
     sample_size = min(len(train_df), 300)
 
-    pairwise_relationships_plot = aly.pair(
-        train_df[columns_with_at_least_one_high_corr].sample(sample_size),
-        color='diagnosis_of_heart_disease'
+    # Pairplot-like visualization
+    pairwise_plot = alt.Chart(train_df).mark_point().encode(
+        x=alt.X(alt.repeat("column"), type='quantitative'),
+        y=alt.Y(alt.repeat("row"), type='quantitative'),
+        color='Diagnosis of heart disease'
+    ).properties(
+        width=150,
+        height=150
+    ).repeat(
+        row=['Age', 'Resting BP', 'Cholesterol'],
+        column=['Age', 'Resting BP', 'Cholesterol']
     )
-    pairwise_relationships_plot.save(f"{output_dir}/pairwise_relationships.png")
+    
+    pairwise_plot.save('pairwise_relationships.png')
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,10 +58,41 @@ div.csl-indent {
 
 </head>
 
-<body class="fullcontent">
+<body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">1. SUMMARY</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">2. INTRODUCTION</a></li>
+  <li><a href="#data-validation-cleaning" id="toc-data-validation-cleaning" class="nav-link" data-scroll-target="#data-validation-cleaning">3. DATA VALIDATION &amp; CLEANING</a>
+  <ul class="collapse">
+  <li><a href="#initial-data-cleaning" id="toc-initial-data-cleaning" class="nav-link" data-scroll-target="#initial-data-cleaning">INITIAL DATA CLEANING</a></li>
+  </ul></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method">4. METHOD</a>
+  <ul class="collapse">
+  <li><a href="#eda" id="toc-eda" class="nav-link" data-scroll-target="#eda">4.1 EDA</a></li>
+  </ul></li>
+  <li><a href="#ml-analysis" id="toc-ml-analysis" class="nav-link" data-scroll-target="#ml-analysis">4.2 ML-Analysis</a>
+  <ul class="collapse">
+  <li><a href="#data-preprocessing" id="toc-data-preprocessing" class="nav-link" data-scroll-target="#data-preprocessing">4.2.2. Data Preprocessing</a></li>
+  <li><a href="#model-creation" id="toc-model-creation" class="nav-link" data-scroll-target="#model-creation">4.2.3. model creation</a></li>
+  <li><a href="#balanced-model-testing" id="toc-balanced-model-testing" class="nav-link" data-scroll-target="#balanced-model-testing">4.2.4. Balanced model testing</a></li>
+  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation">4.2.5. Model Evaluation</a></li>
+  <li><a href="#model-evaluation-and-selection" id="toc-model-evaluation-and-selection" class="nav-link" data-scroll-target="#model-evaluation-and-selection">Model evaluation and selection</a></li>
+  <li><a href="#hyperparameter-optimization" id="toc-hyperparameter-optimization" class="nav-link" data-scroll-target="#hyperparameter-optimization">4.2.6. Hyperparameter optimization</a></li>
+  <li><a href="#hyperparameter-optimization-results" id="toc-hyperparameter-optimization-results" class="nav-link" data-scroll-target="#hyperparameter-optimization-results">Hyperparameter optimization results</a></li>
+  <li><a href="#final-model-scoring-and-evaluation" id="toc-final-model-scoring-and-evaluation" class="nav-link" data-scroll-target="#final-model-scoring-and-evaluation">4.2.7 Final model Scoring and Evaluation</a></li>
+  </ul></li>
+  <li><a href="#resultsdiscussion" id="toc-resultsdiscussion" class="nav-link" data-scroll-target="#resultsdiscussion">5. Results/Discussion:</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">6. Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">7. References</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -113,7 +144,7 @@ div.csl-indent {
 <li><strong>Thalassemia</strong> : categorical feature indicating if patient suffered from Thalassemia</li>
 </ul>
 <p>The following sections will discuss the decisions made and results in our Exploratory Data analysis, Machine learning model training, and final model performance</p>
-<p>This report also drew information from the study done by <span class="citation" data-cites="O">(<a href="#ref-O" role="doc-biblioref"><strong>O?</strong></a>’Flaherty2008)</span> and <span class="citation" data-cites="thalassemia">(<a href="#ref-thalassemia" role="doc-biblioref">Athanasios Aessopos 2007</a>)</span></p>
+<p>This report also drew information from the study done by <span class="citation" data-cites="OFlaherty2008">(<a href="#ref-OFlaherty2008" role="doc-biblioref">O’Flaherty et al. 2008</a>)</span> and <span class="citation" data-cites="thalassemia">(<a href="#ref-thalassemia" role="doc-biblioref">Athanasios Aessopos 2007</a>)</span></p>
 </section>
 <section id="data-validation-cleaning" class="level2">
 <h2 class="anchored" data-anchor-id="data-validation-cleaning">3. DATA VALIDATION &amp; CLEANING</h2>
@@ -131,7 +162,36 @@ div.csl-indent {
 <section id="eda" class="level3">
 <h3 class="anchored" data-anchor-id="eda">4.1 EDA</h3>
 <p>In this section, preliminary analysis is conducted to obtain an idea of possible correlations between features to be on the look out for. the results are presented below:</p>
-<p><img src=".png" class="img-fluid"> -figure of eda</p>
+<div id="fig-cat-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cat-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/categorical_distributions.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cat-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Distributions of Categorical Features
+</figcaption>
+</figure>
+</div>
+<div id="fig-num-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-num-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/numeric_distributions.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-num-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Distributions of Numeric Features
+</figcaption>
+</figure>
+</div>
+<div id="fig-cor-mat" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cor-mat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/correlation_matrix.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cor-mat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Correlation Matrix
+</figcaption>
+</figure>
+</div>
 </section>
 </section>
 <section id="ml-analysis" class="level2">
@@ -165,6 +225,102 @@ div.csl-indent {
 <section id="model-evaluation-and-selection" class="level3">
 <h3 class="anchored" data-anchor-id="model-evaluation-and-selection">Model evaluation and selection</h3>
 <p>Comparing the metrics across models, Balanced logistic regression yields the highest recall and with second to the highest f1_score. For this report, we choose to proceed with <code>LogisticRegression(class_weight="balanced")</code> and optimize the f1 score metric along with optimizing recall as we want to minimize False Negatives, which is more damaging in medical diagnosis than False Positives.</p>
+<div class="cell" data-execution_count="2">
+<div id="tbl-model-cv-comps" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-model-cv-comps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Comparison of cross-validation scores across model options.
+</figcaption>
+<div aria-describedby="tbl-model-cv-comps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="14">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">dummy</th>
+<th style="text-align: right;">logreg</th>
+<th style="text-align: right;">svc</th>
+<th style="text-align: right;">logreg_bal</th>
+<th style="text-align: right;">svc_bal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.746</td>
+<td style="text-align: right;">0.797</td>
+<td style="text-align: right;">0.818</td>
+<td style="text-align: right;">0.731</td>
+<td style="text-align: right;">0.747</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.746</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">0.896</td>
+<td style="text-align: right;">0.822</td>
+<td style="text-align: right;">0.916</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.638</td>
+<td style="text-align: right;">0.824</td>
+<td style="text-align: right;">0.477</td>
+<td style="text-align: right;">0.524</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.789</td>
+<td style="text-align: right;">0.969</td>
+<td style="text-align: right;">0.609</td>
+<td style="text-align: right;">0.779</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.62</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0.61</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.94</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.517</td>
+<td style="text-align: right;">0.512</td>
+<td style="text-align: right;">0.555</td>
+<td style="text-align: right;">0.563</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.655</td>
+<td style="text-align: right;">0.747</td>
+<td style="text-align: right;">0.706</td>
+<td style="text-align: right;">0.851</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 <section id="hyperparameter-optimization" class="level3">
 <h3 class="anchored" data-anchor-id="hyperparameter-optimization">4.2.6. Hyperparameter optimization</h3>
@@ -178,16 +334,65 @@ div.csl-indent {
 <section id="final-model-scoring-and-evaluation" class="level3">
 <h3 class="anchored" data-anchor-id="final-model-scoring-and-evaluation">4.2.7 Final model Scoring and Evaluation</h3>
 <p>With hyperparameters selected the best model is fitted on the training set, then scored on both data sets. F1 score, Recall score and Accuracy are all computed across both data sets.</p>
+<div id="fig-conf-mat" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-conf-mat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/confusion_matrix.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conf-mat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Confusion Matrix on Test Data
+</figcaption>
+</figure>
+</div>
+<div class="cell" data-execution_count="3">
+<div id="tbl-model-results" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="3">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-model-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Best model metrics.
+</figcaption>
+<div aria-describedby="tbl-model-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="15">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Metric</th>
+<th style="text-align: right;">Train</th>
+<th style="text-align: right;">Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">F1 Score</td>
+<td style="text-align: right;">0.627</td>
+<td style="text-align: right;">0.333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Recall</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Accuracy</td>
+<td style="text-align: right;">0.777</td>
+<td style="text-align: right;">0.636</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 </section>
 <section id="resultsdiscussion" class="level2">
 <h2 class="anchored" data-anchor-id="resultsdiscussion">5. Results/Discussion:</h2>
-<p>The model created is promising. Applying it on our data set gave approximately 68 [inline code] percent accuracy. This value is close to our baseline dummy accuracy, however with hyper parameter tuning the model achieved a higher F1 score compared to original model (0.68 [inline code] on train F1 score compared to 0.61 [inline code] F1 score for base model cv score). The final F1 score on test data is found to be 0.533 [inlinecode]. Most importantly for our application, the final model performed moderately well at minimizing false negatives. The Recall score for our final model applied to the training data set was 0.830, (improving from the 0.73 [inline code] recall of the original model). On our testing data set, the model performed moderately well, returning a recall value of 0.500 [inline code].</p>
-<p>The discrepancy between training and testing score may be due to the fact that the test data set was quite small (22 examples). To get more rigorous performance testing and confidence in our result, it would be recommended to seek further data.</p>
+<p>The model created is promising. Applying it on our data set gave approximately 63.6 percent accuracy. This value is close to our baseline dummy accuracy, however with hyper parameter tuning the model achieved a higher F1 score compared to original model (0.627 on train F1 score compared to 0.609 F1 score for base model cv score). The final F1 score on test data is found to be 0.333. Most importantly for our application, the final model performed moderately well at minimizing false negatives.<br>
+On our testing data set, the model performed moderately well, returning a recall value of 0.4. The discrepancy between training and testing score may be due to the fact that the test data set was quite small (22 examples). To get more rigorous performance testing and confidence in our result, it would be recommended to seek further data.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">6. Conclusion</h2>
-<p>The model created showed some promise, being able to correctly classify presence of angiographic coronary disease with a decent level of accuracy (~68%). As well, the model performed moderately well on F1 score and was able to minimize the number of false negatives classified (recall around 50.0%)</p>
+<p>The model created showed some promise, being able to correctly classify presence of angiographic coronary disease with a decent level of accuracy (63.6 percent). As well, the model performed moderately well on F1 score and was able to minimize the number of false negatives classified (recall of 0.4).</p>
 <p>There are some limitations to this report that should be noted both at the analysis level and application level.</p>
 <p>On the analysis side, only 2 models were tested. While their performance was encouraging, a more rigorous approach would test a variety of classifiers before proceeding with logistic regression.</p>
 <p>As well, further hyperparameter optimization could be conducted. While a wide range of C-values were tested, Only 50 possible values were tested from this range. An improvement to this would be to randomly sample from a log-uniform distribution to obtain our best C value.</p>
@@ -209,6 +414,9 @@ Janosi, Steinbrunn, Andras, and Robert Detrano. 1989. <span>“<span>Heart Disea
 </div>
 <div id="ref-asymptomatic_coronary_disease" class="csl-entry" role="listitem">
 Master, Arthur M. 1969. <span>“The Extent of Completely Asymptomatic Coronary Artery Disease.”</span> <a href="https://doi.org/10.1016/0002-9149(69)90064-2">https://doi.org/10.1016/0002-9149(69)90064-2</a>.
+</div>
+<div id="ref-OFlaherty2008" class="csl-entry" role="listitem">
+O’Flaherty, M, E Ford, Steven Allender, P Scarborough, and S Capewell. 2008. <span>“<span class="nocase">Coronary heart disease trends in England and Wales from 1984 to 2004 : concealed levelling of mortality rates among young adults</span>,”</span> January. <a href="https://dro.deakin.edu.au/articles/journal_contribution/Coronary_heart_disease_trends_in_England_and_Wales_from_1984_to_2004_concealed_levelling_of_mortality_rates_among_young_adults/21047827">https://dro.deakin.edu.au/articles/journal_contribution/Coronary_heart_disease_trends_in_England_and_Wales_from_1984_to_2004_concealed_levelling_of_mortality_rates_among_young_adults/21047827</a>.
 </div>
 </div></section></div></main>
 <!-- /main column -->

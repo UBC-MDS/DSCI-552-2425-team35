@@ -25,8 +25,6 @@ def main(train, write_to):
     train_df = pd.read_csv(train)
 
     # EDA Steps:
-    print(train_df.info())
-
     # Altair configurations
     alt.data_transformers.enable('default', max_rows=None)
     aly.alt.data_transformers.enable('vegafusion')

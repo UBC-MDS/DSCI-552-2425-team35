@@ -6,7 +6,13 @@ editor: source
 bibliography: references.bib
 execute: 
   echo: false
+toc: true
 ---
+
+```{python}
+import pandas as pd
+from IPython.display import Markdown
+```
 
 ## 1. SUMMARY
 
@@ -87,7 +93,11 @@ Finally, the model is trained and tested on a separate data set, and evaluated f
 In this section, preliminary analysis is conducted 
 to obtain an idea of possible correlations between features to be on the look out for. the results are presented below:
 
-![]() -figure of eda
+![Distributions of Categorical Features](../results/figures/categorical_distributions.png){#fig-cat-dist}
+
+![Distributions of Numeric Features](../results/figures/numeric_distributions.png){#fig-num-dist}
+
+![Correlation Matrix](../results/figures/correlation_matrix.png){#fig-cor-mat}
 
 
 ## 4.2 ML-Analysis
@@ -156,6 +166,14 @@ For this report, we choose to proceed with `LogisticRegression(class_weight="bal
 and optimize the f1 score metric along with optimizing recall
 as we want to minimize False Negatives, which is more damaging in medical diagnosis than False Positives.
 
+```{python}
+#| label: tbl-model-cv-comps
+#| tbl-cap: Comparison of cross-validation scores across model options.
+cv_results_table = pd.read_csv("../results/tables/cross_val_score.csv")
+lr_cv_f1 = cv_results_table.iloc[5, 3]
+Markdown(cv_results_table.to_markdown(index = False))
+```
+
 
 ### 4.2.6. Hyperparameter optimization
 
@@ -183,23 +201,32 @@ With hyperparameters selected the best model is fitted on the training set,
 then scored on both data sets. 
 F1 score, Recall score and Accuracy are all computed across both data sets.
 
+![Confusion Matrix on Test Data](../results/figures/confusion_matrix.png){#fig-conf-mat}
+
+```{python}
+#| label: tbl-model-results
+#| tbl-cap: Best model metrics.
+model_results_table = pd.read_csv("../results/tables/model_metrics.csv")
+best_test_accuracy = model_results_table.iloc[2, 2]*100
+best_train_f1 = model_results_table.iloc[0, 1]
+best_test_f1 = model_results_table.iloc[0, 2]
+best_test_recall = model_results_table.iloc[1, 2]
+Markdown(model_results_table.to_markdown(index = False))
+```
 
 
 ## 5. Results/Discussion:
 
 The model created is promising. 
-Applying it on our data set gave approximately 68 [inline code] percent accuracy. 
+Applying it on our data set gave approximately `{python} best_test_accuracy` percent accuracy. 
 This value is close to our baseline dummy accuracy, 
 however with hyper parameter tuning the model achieved a higher F1 score 
-compared to original model (0.68 [inline code] on train F1 score compared to 0.61 [inline code] F1 score for base model cv score). 
-The final F1 score on test data is found to be 0.533 [inlinecode].
+compared to original model (`{python} best_train_f1` on train F1 score compared to `{python} lr_cv_f1` F1 score for base model cv score). 
+The final F1 score on test data is found to be `{python} best_test_f1`.
 Most importantly for our application, 
-the final model performed moderately well at minimizing false negatives. 
-The Recall score for our final model applied to the training data set was 0.830, 
-(improving from the 0.73 [inline code] recall of the original model). 
+the final model performed moderately well at minimizing false negatives.  
 On our testing data set, the model performed moderately well, 
-returning a recall value of 0.500 [inline code].
-
+returning a recall value of `{python} best_test_recall`.
 The discrepancy between training and testing score 
 may be due to the fact that the test data set was quite small (22 examples). 
 To get more rigorous performance testing and confidence in our result, 
@@ -211,9 +238,9 @@ it would be recommended to seek further data.
 ## 6. Conclusion
 
 The model created showed some promise, 
-being able to correctly classify presence of angiographic coronary disease with a decent level of accuracy (~68%). 
+being able to correctly classify presence of angiographic coronary disease with a decent level of accuracy (`{python} best_test_accuracy` percent). 
 As well, the model performed moderately well on F1 score and was able to minimize the number of false negatives classified 
-(recall around 50.0%)
+(recall of `{python} best_test_recall`).
 
 There are some limitations to this report that should be noted 
 both at the analysis level and application level.

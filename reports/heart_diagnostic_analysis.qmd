@@ -4,6 +4,8 @@ author: "Marek Boulerice, Sarah Eshafi, Long Nguyen, Hui Tang"
 format: html
 editor: source
 bibliography: references.bib
+execute: 
+  echo: false
 ---
 
 ## 1. SUMMARY

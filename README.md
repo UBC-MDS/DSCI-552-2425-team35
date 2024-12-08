@@ -24,6 +24,25 @@ Copy the link from the output (the link would look like below)
 and paste it to your browser and change the port number from `8888` to `9999` to launch jupyter notebook.
 ![Jupyter-lab](img/9999.png)
 
+#### 2\. Running the Analysis
+To run the analysis, open a terminal and run the following commands:
+```
+python scripts/1_download_decode_data.py --id=45 --write-to=data/raw
+
+python scripts/2_data_split_validate.py --split=0.1 --raw-data=data/raw/pretransformed_heart_disease.csv --write-to=data/processed
+
+python scripts/3_eda.py  --train data/processed/train_df.csv --test data/processed/test_df.csv --write-to results
+
+python scripts/4_training_models.py --train data/processed/train_df.csv --write-to results
+
+python scripts/5_evaluate.py --train data/processed/train_df.csv --test data/processed/test_df.csv --write-to results
+
+quarto render reports/heart_diagnostic_analysis.qmd --to html
+```
+
+#### 3\. Clean Up
+To shut down the container and clean up the resources, type Cntrl + C in the terminal where you launched the container, and then type `docker compose rm`.
+
 ## Dependencies
 - conda (version 24.7.1 or higher)
 - conda-lock (version 2.5.7 or higher)

@@ -90,11 +90,15 @@ def main(train, write_to):
                            return_train_score=True)
         ).agg(['mean', 'std']).round(3).T
     
-    # Save cross-validation results
-    pd.concat(cross_val_results, axis='columns').xs('std', axis='columns', level=1).to_csv(
+    # Save cross-validation results (standard deviation)
+    std_df = pd.concat(cross_val_results, axis='columns').reset_index()
+    std_df.to_csv(
         os.path.join(write_to, "tables", "cross_val_std.csv"), index=False
     )
-    pd.concat(cross_val_results, axis='columns').xs('mean', axis='columns', level=1).to_csv(
+    
+    # Save cross-validation results (mean)
+    mean_df = pd.concat(cross_val_results, axis='columns').reset_index()
+    mean_df.to_csv(
         os.path.join(write_to, "tables", "cross_val_score.csv"), index=False
     )
     

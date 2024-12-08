@@ -7,6 +7,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import click
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.compose import make_column_transformer
@@ -23,11 +25,12 @@ from sklearn.metrics import (make_scorer, precision_score, recall_score, f1_scor
 @click.command()
 @click.option('--train', type=str, help="Location of train data file")
 @click.option('--test', type=str, help="Location of test data file")
-def main(train, test):
+@click.option('--write-to', type=str, help="Path to master directory where outputs will be written")
+def main(train, test, write_to):
     # Ensure necessary directories exist
-    os.makedirs("../results/tables", exist_ok=True)
-    os.makedirs("../results/models", exist_ok=True)
-    os.makedirs("../results/figs", exist_ok=True)
+    os.makedirs(os.path.join(write_to, "tables"), exist_ok=True)
+    os.makedirs(os.path.join(write_to, "models"), exist_ok=True)
+    os.makedirs(os.path.join(write_to, "figs"), exist_ok=True)
 
     # Load train and test data
     train_data = pd.read_csv(train)
@@ -92,10 +95,10 @@ def main(train, test):
     
     # Save cross-validation results
     pd.concat(cross_val_results, axis='columns').xs('std', axis='columns', level=1).to_csv(
-        "../results/tables/cross_val_std.csv", index=False
+        os.path.join(write_to, "tables", "cross_val_std.csv"), index=False
     )
     pd.concat(cross_val_results, axis='columns').xs('mean', axis='columns', level=1).to_csv(
-        "../results/tables/cross_val_score.csv", index=False
+        os.path.join(write_to, "tables", "cross_val_score.csv"), index=False
     )
     
     # 4. HYPERPARAMETER OPTIMIZATION
@@ -111,7 +114,7 @@ def main(train, test):
     best_model = random_search.best_estimator_
 
     # Save the best model
-    with open("../results/models/disease_pipeline.pickle", 'wb') as f:
+    with open(os.path.join(write_to, "models", "disease_pipeline.pickle"), 'wb') as f:
         pickle.dump(best_model, f)
     
     # Evaluate the model
@@ -130,11 +133,11 @@ def main(train, test):
             best_model.score(X_test, y_test),
         ],
     })
-    metrics_df.to_csv("../results/tables/model_metrics.csv", index=False)
+    metrics_df.to_csv(os.path.join(write_to, "tables", "model_metrics.csv"), index=False)
 
     # Save confusion matrix
     confmat = ConfusionMatrixDisplay.from_estimator(best_model, X_test, y_test, values_format="d")
-    plt.savefig("../results/figs/confusion_matrix.png")
+    plt.savefig(os.path.join(write_to, "figs", "confusion_matrix.png"))
     plt.close()
 
 if __name__ == '__main__':

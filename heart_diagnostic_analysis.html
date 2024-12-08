@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marek Boulerice, Sarah Eshafim, Long Nguyen, Hui Tang">
+
+<title>Creating Machine learning Model to Predict Presence of Coronary Artery Disease</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="heart_diagnostic_analysis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="heart_diagnostic_analysis_files/libs/quarto-html/quarto.js"></script>
+<script src="heart_diagnostic_analysis_files/libs/quarto-html/popper.min.js"></script>
+<script src="heart_diagnostic_analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="heart_diagnostic_analysis_files/libs/quarto-html/anchor.min.js"></script>
+<link href="heart_diagnostic_analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="heart_diagnostic_analysis_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="heart_diagnostic_analysis_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="heart_diagnostic_analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="heart_diagnostic_analysis_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Creating Machine learning Model to Predict Presence of Coronary Artery Disease</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Marek Boulerice, Sarah Eshafim, Long Nguyen, Hui Tang </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">1. SUMMARY</h2>
+<p>The following document covers a machine learning model analysis with a goal to predict angiographic coronary disease in patients. Data is pulled from patients undergoing angiography at the Cleveland Clinic in Ohio. This analysis is composed of Exploratory Data Analysis, testing of various machine models on a training data set, model optimization via hyperparameter, and final model performance analysis. The final model is shown to have promising results, though limitations apply and further testing and optimization is recommended.</p>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">2. INTRODUCTION</h2>
+<p>Heart disease is the leading cause of death worldwide. Treating these heart diseases depends on capability of detecting symptoms and diagnosing cases earlier. One complication to diagnosing heart diseases is that many cases are found to be aymptomatic (Master et al, 1969). This creates an opportunity for application of machine learning methods, where the following question can be asked: Given various details about a clients medical status, can we create a statistical model to accurately predict whether the patient has the disease? The goal of the following analysis is to create a model that can anwswer this question. To be best suited to the problem, the model should retain a high accuracy while minimizing the number of false negatives (ie predicting that a patient does not have the heart disease when the patient in fact does).</p>
+<p>In particular, this analysis focuses on detection of angiographic coronary disease. The data set used in creating our model was taken from 303 patients undergoing angiography Cleveland Clinic in Cleveland, Ohio (Janosi et al, 1989). From this procedure, a set of parameters were collected about each patients, and a diagnosis of whether the patient had the angiographic coronary disease (signified by a diameter narrowing of the coronary artery by at least 50%). This is to serve as the target variable in our analysis</p>
+<p>The set of parameters collected during the procedure, used as our features for model training, are as follows:</p>
+<ul>
+<li><strong>Age (in years)</strong> : Age of patient (years)</li>
+<li><strong>Sex</strong> : Sex of patient (male or female)</li>
+<li><strong>Chest pain type</strong>: categorical feature describing the type of pain experienced by the patient</li>
+<li><strong>Resting Blood Pressure</strong>: numeric feature giving patients resting blood pressure</li>
+<li><strong>Serum Cholesterol</strong> : numneric feature giving the patients Serum cholesterol in mg/dl</li>
+<li><strong>Fasting blood sugar &gt; 120 mg/dl</strong> : binary feature indicating whether the patients Blood sugar level while fasting exceeded 120 mg/dl</li>
+<li><strong>Resting electrocardiographic results</strong>: categorical feature reporting patients ECG results</li>
+<li><strong>Maximum heart rate achieved</strong>: numeric feature giving maximum heart rate achieved by patent</li>
+<li><strong>Exercise-induced angina</strong>: binary feature indicating whether patient underwent exercise induced angina</li>
+<li><strong>ST depression induced by exercise relative to rest</strong>: numeric feature indicating the ST depression induced by exercise relative to rest</li>
+<li><strong>Slope of the peak exercise ST segment</strong></li>
+<li><strong>Thalassemia</strong> : categorical feature indicating if patient suffered from Thalassemia</li>
+</ul>
+<p>The following sections will discuss the decisions made and results in our Exploratory Data analysis, Machine learning model training, and final model performance</p>
+</section>
+<section id="data-validation-cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="data-validation-cleaning">3. DATA VALIDATION &amp; CLEANING</h2>
+<p>wondering if we should throw this into our method section…</p>
+</section>
+<section id="method" class="level2">
+<h2 class="anchored" data-anchor-id="method">4. METHOD</h2>
+<p>The following section outlines the steps taken in manipulating our data and creating our model.</p>
+<p>EDA is first conducted to obtain an idea of feature importance and to establish any important correlations to watch for.</p>
+<p>Machine learning analysis is then performed, where multiple models are tested and their performance compared. The best performing model is selected to proceed with. On this model, hyperparameter test is completed via random search to tune our model and obtain best results. Finally, the model is trained and tested on a separate data set, and evaluated for performance.</p>
+<section id="eda" class="level3">
+<h3 class="anchored" data-anchor-id="eda">4.1 EDA</h3>
+<p>In this section … The following is obtained …</p>
+</section>
+</section>
+<section id="ml-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="ml-analysis">4.2 ML-Analysis</h2>
+<p>The following section outlines the procedure taken in creating our model and testing it on our data set. As this is a classification problem (predict whether the patient has the disease or not), the chosen models for testing in this analyis are a Logistic Regression model and a Suport Vector Classifier. These two models were selected as they have been shown to historically perform well on real world data sets.</p>
+<p>Since this data set is somewhat unbalanced (~80/20 split on non-disease vs disease), the primary scoring metric to evaluate these models will be F1 score, though model accuracy is still taken into consideration. Due to the nature of the analysis, special attention is taken to minimize false negatives as they represent the most damaging type of error (predicting that a patient is free of the disease when he does in fact have it). To this effect, we look to maximize Recall.</p>
+<p>The framework upon which this analysis is based has been adapted from DSCI573 Lab1.</p>
+<section id="data-preprocessing" class="level3">
+<h3 class="anchored" data-anchor-id="data-preprocessing">4.2.2. Data Preprocessing</h3>
+<p>Features are sorted by type, and a column transformer object is created. on categorical columns, simple imputing is applied filling missing values with the most frequently occuring value. One hot encoding is then performed.</p>
+<p>For numerical feature, standard scaling is applied to keep all features within the same range</p>
+</section>
+<section id="model-creation" class="level3">
+<h3 class="anchored" data-anchor-id="model-creation">4.2.3. model creation</h3>
+<p>Basic models (default hyperparameter values) are now generated. A dummy model is first created to use as a baseline to use for comparison. Then, a logistic regressor and support vector classifier model is created. 5-fold cross validation (CV) is performed on each model and scores are returned.</p>
+<p>As discussed above, F1 score is to be the primary metric to evaluate model performance, with precision as a secondary metric. this is reflected in the scoring metrics used in CV</p>
+<p>Finally, a Confusion matrix is generated for each model to give an idea of false positive vs false negative rate.</p>
+</section>
+<section id="balanced-model-testing" class="level3">
+<h3 class="anchored" data-anchor-id="balanced-model-testing">4.2.4. Balanced model testing</h3>
+<p>Step 4.2.3 is repeated, this time creating balanced logistic regressor and SVC models, with all other hyperparameters held the same. Confusion matrices are once again generated. The goal of this step is to gain an understanding of how much accuracy is sacrificed at the benefit of improving F1 score.</p>
+</section>
+<section id="model-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="model-evaluation">4.2.5. Model Evaluation</h3>
+<p>With baseline models created, they are evaluated according to the criteria set above. CV scores of each model are presented below. First, standard deviation is shown verify there are no abnormally performing models. Scores are then presented in the table below</p>
+</section>
+<section id="model-evaluation-and-selection" class="level3">
+<h3 class="anchored" data-anchor-id="model-evaluation-and-selection">Model evaluation and selection</h3>
+<p>Comparing the metrics across models, Balanced logistic regression yields the highest recall and with second to the highest f1_score. For this report, we choose to proceed with <code>LogisticRegression(class_weight="balanced")</code> and optimize the f1 score metric along with optimizing recall as we want to minimize False Negatives, which is more damaging in medical diagnosis than False Positives.</p>
+</section>
+<section id="hyperparameter-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="hyperparameter-optimization">4.2.6. Hyperparameter optimization</h3>
+<p>Proceeding with a balanced logistic regressor model, we now perform hyperparameter optimization. Logistic regressors has only one hyperparameter C, which is sampled from a loguniform distribution. optimization is based on F1 score</p>
+</section>
+<section id="hyperparameter-optimization-results" class="level3">
+<h3 class="anchored" data-anchor-id="hyperparameter-optimization-results">Hyperparameter optimization results</h3>
+<p>The hyperparameter optimization made a difference <strong>(‘mean_test_score’ (0.58) compared to ‘mean_test_score of cross’ (0.54) of previous mean validation score)</strong>. However, the cross-validation scores among the top three models are approximately equivalent. This suggests that the model’s performance is relatively stable across the parameter space, indicating that further tuning may not yield substantial improvements.</p>
+</section>
+<section id="final-model-scoring-and-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="final-model-scoring-and-evaluation">4.2.7 Final model Scoring and Evaluation</h3>
+<p>With hyperparameters selected the best model is fitted on the training set, then scored on both data sets. F1 score, Recall score and Accuracy are all computed across both data sets.</p>
+</section>
+</section>
+<section id="resultsdiscussion" class="level2">
+<h2 class="anchored" data-anchor-id="resultsdiscussion">5. Results/Discussion:</h2>
+<p>The model created is promising. Applying it on our data set gave approximately 68 percent accuracy. This value is close to our baseline dummy accuracy, however with hyper parameter tuning the model achieved a higher F1 score compared to original model (0.68 on train F1 score compared to 0.61 F1 score for base model cv score). The final F1 score on test data is found to be 0.533. Most importantly for our application, the final model performed moderately well at minimizing false negatives. The Recall score for our final model applied to the training data set was 0.830, (improving from the 0.73 recall of the original model). On our testing data set, the model performed moderately well, returning a recall value of 0.500.</p>
+<p>The discrepancy between training and testing score may be due to the fact that the test data set was quite small (22 examples). To get more rigorous performance testing and confidence in our result, it would be recommended to seek further data.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">6. Conclusion</h2>
+<p>The model created showed some promise, being able to correctly classify presence of angiographic coronary disease with a decent level of accuracy (~68%). As well, the model performed moderately well on F1 score and was able to minimize the number of false negatives classified (recall around 50.0%)</p>
+<p>There are some limitations to this report that should be noted both at the analysis level and application level.</p>
+<p>On the analysis side, only 2 models were tested. While their performance was encouraging, a more rigorous approach would test a variety of classifiers before proceeding with logistic regression.</p>
+<p>As well, further hyperparameter optimization could be conducted. While a wide range of C-values were tested, Only 50 possible values were tested from this range. An improvement to this would be to randomly sample from a log-uniform distribution to obtain our best C value.</p>
+<p>Lastly and perhaps most importantly, there is a large discrepancy between our test data set relative to the training data. The most reasonable explanation for this would be an test set too small to be representative.</p>
+<p>On the application side, we should note that this model was tested specifically for one type of heart disease. The scope of the data used in training should be taken into account before proceeding with prediction on new data. As well this model requires a significant amount of medical information about a patient in order to create a prediction. Most of the information used to create the features to train the model is obtained through angiography, a process which itself ends in a diagnosis of the disease. So it is worth noting that even a high performing model will not be immediately applicable, though it gives confidence on the process.</p>
+<p>Overall, we recommend further pursuing optimization of this model. Due to the high discrepancy between training and testing scores, we would strongly recommend performing further testing on the model on new, larger data sets before proceeding with it.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">7. References</h2>
+<ol type="1">
+<li>Janosi, A., et al.&nbsp;“Heart Disease Data Set.” UCI Machine Learning Repository, 30 June 1988, https://archive.ics.uci.edu/dataset/45/heart+disease.</li>
+<li>O’Flaherty, M., et al.&nbsp;“Coronary heart disease trends in England and Wales from 1984 to 2004: concealed levelling of mortality rates among young adults.” Heart BMJ Journals, 1 January 2008, https://hdl.handle.net/10536/DRO/DU:30020483.</li>
+<li>Master A.M. and Geller, A.J. “The Extent of Completely Asymptomatic Coronary Artery Disease.” The American Journal of Cardiology, 1 February 1969, https://doi.org/10.1016/0002-9149(69)90064-2.</li>
+<li>Aessopos, A., et al.&nbsp;“Heart Disease in Thalassemia Intermedia: a review of the underlying pathophysiology.” Progress in Hematology, 1 May 2007, https://doi.org/10.3324/haematol.10915.</li>
+</ol>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -45,8 +45,8 @@ def main(train, test, write_to):
     test_data = pd.read_csv(test)
 
     # Split data into features and labels
-    X_train, y_train = train_data.drop(columns='target'), train_data['target']
-    X_test, y_test = test_data.drop(columns='target'), test_data['target']
+    X_train, y_train = train_data.drop(columns='Diagnosis of heart disease'), train_data['Diagnosis of heart disease']
+    X_test, y_test = test_data.drop(columns='Diagnosis of heart disease'), test_data['Diagnosis of heart disease']
 
     # Load the saved best model
     with open(model_path, 'rb') as f:
@@ -58,16 +58,17 @@ def main(train, test, write_to):
     metrics_df = pd.DataFrame({
         'Metric': ['F1 Score', 'Recall', 'Accuracy'],
         'Train': [
-            f1_score(y_train, train_predictions, pos_label='> 50% diameter narrowing'),
-            recall_score(y_train, train_predictions, pos_label='> 50% diameter narrowing'),
+            f1_score(y_train, train_predictions, average='binary', pos_label='> 50% diameter narrowing'),
+            recall_score(y_train, train_predictions, average='binary', pos_label='> 50% diameter narrowing'),
             best_model.score(X_train, y_train),
         ],
         'Test': [
-            f1_score(y_test, test_predictions, pos_label='> 50% diameter narrowing'),
-            recall_score(y_test, test_predictions, pos_label='> 50% diameter narrowing'),
+            f1_score(y_test, test_predictions, average='binary', pos_label='> 50% diameter narrowing'),
+            recall_score(y_test, test_predictions, average='binary', pos_label='> 50% diameter narrowing'),
             best_model.score(X_test, y_test),
         ],
     })
+    metrics_df = metrics_df.round(3)
     metrics_df.to_csv(os.path.join(write_to, "tables", "model_metrics.csv"), index=False)
 
     # Save confusion matrix

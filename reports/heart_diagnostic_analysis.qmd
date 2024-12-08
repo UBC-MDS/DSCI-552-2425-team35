@@ -62,9 +62,8 @@ Prior to performing our analysis, an initial validation and cleaning step was pe
 
 ### INITIAL DATA CLEANING
 From an initial preview of the data, some issues were correct immediately, before performing formal data validation. 
-This includes:
-1. Removing invalid target values (i.e. values above 
-2) and converting the values to their semantic meaning.
+This includes removing invalid target values (i.e. values above 2) 
+and converting the values to their semantic meaning.
 
 Next, we evaluated whether the features in the train and test dataset are distributed similarly using deepchecks.
 The check concluded that that the features were not distributed significantly and our distributions are as expected.
@@ -82,7 +81,9 @@ Finally, the model is trained and tested on a separate data set, and evaluated f
 
 ### 4.1 EDA
 In this section, preliminary analysis is conducted 
-to obtain an idea of possible correlations between features to be on the look out for
+to obtain an idea of possible correlations between features to be on the look out for. the results are presented below:
+
+![]() -figure of eda
 
 
 ## 4.2 ML-Analysis
@@ -109,6 +110,8 @@ One hot encoding is then performed.
 
 For numerical feature, standard scaling is applied to keep all features within the same range
 
+![]() - table of data head
+
 ### 4.2.3. model creation
 
 Basic models (default hyperparameter values) are now generated. 
@@ -121,6 +124,8 @@ with precision as a secondary metric. this is reflected in the scoring metrics u
 
 Finally, a Confusion matrix is generated for each model to give an idea of false positive vs false negative rate. 
 
+![]() -image of confusion matrix
+
 
 ### 4.2.4. Balanced model testing
 
@@ -128,12 +133,16 @@ Step 4.2.3 is repeated, this time creating balanced logistic regressor and SVC  
 with all other hyperparameters held the same. Confusion matrices are once again generated.
 The goal of this step is to gain an understanding of how much accuracy is sacrificed at the benefit of improving F1 score.
 
+![]() - confusion matrix image
+
 ### 4.2.5. Model Evaluation
 
 With baseline models created, they are evaluated according to the criteria set above.
 CV scores of each model are presented below. 
 First, standard deviation is shown verify there are no abnormally performing models. 
 Scores are then presented in the table below
+
+[table of model scores]
 
 ### Model evaluation and selection
 Comparing the metrics across models, 
@@ -154,8 +163,11 @@ optimization is based on F1 score
 
 
 ### Hyperparameter optimization results
+[] hyper param table
+
+
 The hyperparameter optimization made a difference
-**('mean_test_score' (0.58) compared to 'mean_test_score of cross' (0.54) of previous mean validation score)**.
+**('mean_test_score' (0.58) [inline code] compared to 'mean_test_score of cross' (0.54) [inline code] of previous mean validation score)**.
 However, the cross-validation scores among the top three models are approximately equivalent. 
 This suggests that the model's performance is relatively stable across the parameter space, 
 indicating that further tuning may not yield substantial improvements.
@@ -172,17 +184,17 @@ F1 score, Recall score and Accuracy are all computed across both data sets.
 ## 5. Results/Discussion:
 
 The model created is promising. 
-Applying it on our data set gave approximately 68 percent accuracy. 
+Applying it on our data set gave approximately 68 [inline code] percent accuracy. 
 This value is close to our baseline dummy accuracy, 
 however with hyper parameter tuning the model achieved a higher F1 score 
-compared to original model (0.68 on train F1 score compared to 0.61 F1 score for base model cv score). 
-The final F1 score on test data is found to be 0.533.
+compared to original model (0.68 [inline code] on train F1 score compared to 0.61 [inline code] F1 score for base model cv score). 
+The final F1 score on test data is found to be 0.533 [inlinecode].
 Most importantly for our application, 
 the final model performed moderately well at minimizing false negatives. 
 The Recall score for our final model applied to the training data set was 0.830, 
-(improving from the 0.73 recall of the original model). 
+(improving from the 0.73 [inline code] recall of the original model). 
 On our testing data set, the model performed moderately well, 
-returning a recall value of 0.500.
+returning a recall value of 0.500 [inline code].
 
 The discrepancy between training and testing score 
 may be due to the fact that the test data set was quite small (22 examples). 

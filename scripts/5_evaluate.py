@@ -10,13 +10,13 @@ from sklearn.metrics import ConfusionMatrixDisplay, f1_score, recall_score, accu
 import click
 
 @click.command()
+@click.option('--test', type=str, help="Path to the test data file", required=True)
 @click.option('--write-to', type=str, help="Path to the master directory where outputs will be written", required=True)
-def main(write_to):
+def main(test, write_to):
     """
     Evaluate a trained model on test data and save evaluation metrics and confusion matrix.
     """
-    # Hardcoded paths for test data and saved model
-    test = "data/processed/test_df.csv"
+    # Define the path to the saved model file
     model_path = os.path.join(write_to, "models", "disease_pipeline.pickle")
 
     # Ensure necessary directories exist

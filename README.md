@@ -31,7 +31,7 @@ python scripts/1_download_decode_data.py --id=45 --write-to=data/raw
 
 python scripts/2_data_split_validate.py --split=0.1 --raw-data=data/raw/pretransformed_heart_disease.csv --write-to=data/processed
 
-python scripts/3_eda.py  --train data/processed/train_df.csv --test data/processed/test_df.csv --write-to results
+python scripts/3_eda.py  --train data/processed/train_df.csv --write-to results
 
 python scripts/4_training_models.py --train data/processed/train_df.csv --write-to results
 

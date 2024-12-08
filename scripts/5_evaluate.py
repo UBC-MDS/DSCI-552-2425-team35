@@ -73,7 +73,13 @@ def main(train, test, write_to):
 
     # Save confusion matrix
     confmat = ConfusionMatrixDisplay.from_estimator(best_model, X_test, y_test, values_format="d")
-    confmat.figure_.savefig(os.path.join(write_to, "figures", "confusion_matrix.png"))
+    confmat.figure_.set_size_inches(10, 7)  # Set custom figure size
+    confmat.figure_.tight_layout()
+    confmat.figure_.savefig(
+        os.path.join(write_to, "figures", "confusion_matrix.png"),
+        bbox_inches='tight'
+    )
+
 
 if __name__ == '__main__':
     main()

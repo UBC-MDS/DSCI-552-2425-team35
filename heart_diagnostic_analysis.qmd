@@ -23,11 +23,11 @@ Treating these heart diseases depends on capability of detecting symptoms and di
 One complication to diagnosing heart diseases is that many cases are found to be aymptomatic (Master et al, 1969). 
 This creates an opportunity for application of machine learning methods,
 where the following question can be asked:
- Given various details about a clients medical status, 
- can we create a statistical model to accurately predict whether the patient has the disease? 
- The goal of the following analysis is to create a model that can anwswer this question. 
- To be best suited to the problem, the model should retain a high accuracy while minimizing the number of false negatives 
- (ie predicting that a patient does not have the heart disease when the patient in fact does).
+Given various details about a clients medical status, 
+can we create a statistical model to accurately predict whether the patient has the disease? 
+The goal of the following analysis is to create a model that can anwswer this question. 
+To be best suited to the problem, the model should retain a high accuracy while minimizing the number of false negatives 
+(ie predicting that a patient does not have the heart disease when the patient in fact does).
 
 In particular, this analysis focuses on detection of angiographic coronary disease. 
 The data set used in creating our model was taken from 303 patients undergoing angiography Cleveland Clinic in Cleveland, Ohio (Janosi et al, 1989).
@@ -57,8 +57,16 @@ The following sections will discuss the decisions made and results in our Explor
 
 ## 3. DATA VALIDATION & CLEANING
 
-wondering if we should throw this into our method section...
+Prior to performing our analysis, an initial validation and cleaning step was performed on the data.
 
+### INITIAL DATA CLEANING
+From an initial preview of the data, some issues were correct immediately, before performing formal data validation. 
+This includes:
+1. Removing invalid target values (i.e. values above 
+2) and converting the values to their semantic meaning.
+
+Next, we evaluated whether the features in the train and test dataset are distributed similarly using deepchecks.
+The check concluded that that the features were not distributed significantly and our distributions are as expected.
 
 
 ## 4. METHOD
@@ -66,17 +74,15 @@ wondering if we should throw this into our method section...
 The following section outlines the steps taken in manipulating our data and creating our model.
 
 EDA is first conducted to obtain an idea of feature importance and to establish any important correlations to watch for.
-
-Machine learning analysis is then performed,
-where multiple models are tested and their performance compared. 
+Machine learning analysis is then performed, where multiple models are tested and their performance compared. 
 The best performing model is selected to proceed with. 
 On this model, hyperparameter test is completed via random search to tune our model and obtain best results.
-Finally, the model is trained and tested on a separate data set, 
-and evaluated for performance.
+Finally, the model is trained and tested on a separate data set, and evaluated for performance.
 
 ### 4.1 EDA
-In this section ...
-The following is obtained ...
+In this section, preliminary analysis is conducted 
+to obtain an idea of possible correlations between features to be on the look out for
+
 
 ## 4.2 ML-Analysis
 

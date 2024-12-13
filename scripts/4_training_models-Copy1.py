@@ -6,13 +6,10 @@ import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt
 import pickle
-import warnings
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import click
-from sklearn.exceptions import UndefinedMetricWarning
-from sklearn.utils import parallel_backend
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.compose import make_column_transformer
 from sklearn.pipeline import make_pipeline
@@ -23,13 +20,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import RandomizedSearchCV, cross_validate, train_test_split
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import (make_scorer, precision_score, recall_score, f1_score)
-from src.class_model_trainer import class_model_trainer
+
 
 @click.command()
 @click.option('--train', type=str, help="Location of train data file")
 @click.option('--write-to', type=str, help="Path to master directory where outputs will be written")
 def main(train, write_to):
-
     # Ensure necessary directories exist
     os.makedirs(os.path.join(write_to, "tables"), exist_ok=True)
     os.makedirs(os.path.join(write_to, "models"), exist_ok=True)
@@ -74,11 +70,38 @@ def main(train, write_to):
         "f1": make_scorer(f1_score, pos_label='> 50% diameter narrowing'),
     }
     
-    # 3. Training models
-    models = class_model_trainer(preprocessor, X_train, y_train, pos_lable = '> 50% diameter narrowing', 
-                        seed=123, write_to=write_to, 
-                        cv = 5, metrics = classification_metrics)
-
+    # 3. TRAINING MODELS
+    models = {
+        "dummy": make_pipeline(DummyClassifier()),
+        "logreg": make_pipeline(preprocessor, LogisticRegression(random_state=123, max_iter=1000)),
+        "svc": make_pipeline(preprocessor, SVC(random_state=123)),
+        "logreg_bal": make_pipeline(preprocessor, LogisticRegression(random_state=123, max_iter=1000, class_weight="balanced")),
+        "svc_bal": make_pipeline(preprocessor, SVC(random_state=123, class_weight="balanced"))
+    }
+    
+    cross_val_results = {}
+    for model_name, pipeline in models.items():
+        cross_val_results[model_name] = pd.DataFrame(
+            cross_validate(pipeline, 
+                           X_train, 
+                           y_train, 
+                           cv=5, 
+                           scoring=classification_metrics, 
+                           return_train_score=True)
+        ).agg(['mean', 'std']).round(3).T
+    
+    # Save cross-validation results (standard deviation)
+    std_df = pd.concat(cross_val_results, axis='columns').reset_index()
+    std_df.to_csv(
+        os.path.join(write_to, "tables", "cross_val_std.csv"), index=False
+    )
+    
+    # Save cross-validation results (mean)
+    mean_df = pd.concat(cross_val_results, axis='columns').reset_index()
+    mean_df.to_csv(
+        os.path.join(write_to, "tables", "cross_val_score.csv"), index=False
+    )
+    
     # 4. HYPERPARAMETER OPTIMIZATION
     param_distributions = {'logisticregression__C': np.logspace(-5, 5, 50)}
     custom_scorer = make_scorer(f1_score, pos_label='> 50% diameter narrowing')
@@ -88,12 +111,9 @@ def main(train, write_to):
         n_iter=100, n_jobs=-1, scoring=custom_scorer, random_state=123,
         return_train_score=True
     )
-    
-    with parallel_backend("multiprocessing"):
-      with warnings.catch_warnings():
-        random_search.fit(X_train, y_train)
+    random_search.fit(X_train, y_train)
     best_model = random_search.best_estimator_
- 
+
     # Save the best model
     with open(os.path.join(write_to, "models", "disease_pipeline.pickle"), 'wb') as f:
         pickle.dump(best_model, f)

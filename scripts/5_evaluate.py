@@ -20,6 +20,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import RandomizedSearchCV, cross_validate, train_test_split
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import (make_scorer, precision_score, recall_score, f1_score)
+from src.123 import long
 
 @click.command()
 @click.option('--train', type=str, help="Location of train data file")

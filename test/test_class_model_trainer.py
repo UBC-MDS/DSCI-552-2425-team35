@@ -1,3 +1,7 @@
+# test_class_model_trainer.py
+# author: Long Nguyen
+# date: 2024-12-13
+
 import os
 import sys
 
@@ -14,10 +18,51 @@ from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 
 from sklearn.exceptions import UndefinedMetricWarning
+
+# Suppress UndefinedMetricWarning when calculating precision for Dummy
+warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
+
 # Import the function to test
 from src.class_model_trainer import class_model_trainer
 
 def test_class_model_trainer():
+    """
+    Test script for validating the functionality of the `class_model_trainer` function.
+    
+    This script:
+    1. Creates a synthetic classification dataset using `make_classification`.
+    2. Prepares the dataset for training by applying preprocessing pipelines for categorical and numerical features.
+    3. Splits the dataset into training and test sets.
+    4. Trains a series of models using the `class_model_trainer` function and writes the results to specified output files.
+    5. Asserts that the expected models are trained and the output files (cross-validation scores) are generated.
+    6. Validates that the output files contain data.
+    
+    Modules and Libraries:
+    - `os`, `sys`: For managing paths and directories.
+    - `pandas`, `numpy`: For data manipulation.
+    - `warnings`: To suppress specific warnings during testing.
+    - `sklearn`: For dataset generation, model training, and preprocessing pipelines.
+    
+    Key Steps:
+    - Preprocessing: Applies `SimpleImputer`, `OneHotEncoder`, and `StandardScaler` to handle missing values, encode categorical variables, and scale numeric features.
+    - Model Training: Utilizes `class_model_trainer` to train models and performs 3-fold cross-validation.
+    - Output Validation: Checks if expected models are returned and corresponding CSV files are created and populated.
+    
+    Expected Output:
+    - Model dictionary containing trained models (`dummy`, `logreg`, `svc`).
+    - Two CSV files (`cross_val_std.csv` and `cross_val_score.csv`) saved under the `test_output/tables` directory.
+    
+    Usage:
+    - Run the script directly to execute the test.
+    - Ensure the `src.class_model_trainer` module is accessible from the `src` directory.
+    
+    Raises:
+    - AssertionError: If any of the validation steps fail.
+    
+    Example:
+        $ python test_class_model_trainer.py
+    """
+    
     # Create synthetic dataset
     X, y = make_classification(
         n_samples=100, 

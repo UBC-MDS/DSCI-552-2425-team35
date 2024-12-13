@@ -25,6 +25,12 @@ from sklearn.dummy import DummyClassifier
 from sklearn.metrics import (make_scorer, precision_score, recall_score, f1_score)
 from src.class_model_trainer import class_model_trainer
 
+# Suppress UndefinedMetricWarning when calculating precision for Dummy
+warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
+
+# Suppress UserWarning when transforming test data
+warnings.filterwarnings("ignore", category=UserWarning)
+
 @click.command()
 @click.option('--train', type=str, help="Location of train data file")
 @click.option('--write-to', type=str, help="Path to master directory where outputs will be written")

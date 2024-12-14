@@ -33,9 +33,12 @@ python scripts/2_data_split_validate.py --split=0.1 --raw-data=data/raw/pretrans
 
 python scripts/3_eda.py  --train data/processed/train_df.csv --write-to results
 
-python scripts/4_training_models.py --train data/processed/train_df.csv --write-to results
+python scripts/4_training_models.py --train data/processed/train_df.csv --seed 123 --write-to results
 
-python scripts/5_evaluate.py --train data/processed/train_df.csv --test data/processed/test_df.csv --write-to results
+python scripts/5_evaluate.py --train data/processed/train_df.csv \
+                                --test data/processed/test_df.csv \
+                                --pipeline results/models/disease_pipeline.pickle \
+                                --write-to results
 
 quarto render reports/heart_diagnostic_analysis.qmd --to html
 ```

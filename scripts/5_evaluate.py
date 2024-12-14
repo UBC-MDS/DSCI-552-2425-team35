@@ -24,13 +24,14 @@ from sklearn.metrics import (make_scorer, precision_score, recall_score, f1_scor
 @click.command()
 @click.option('--train', type=str, help="Location of train data file")
 @click.option('--test', type=str, help="Path to the test data file", required=True)
+@click.option('--pipeline', type=str, help="Path to the model pickle", required=True)
 @click.option('--write-to', type=str, help="Path to the master directory where outputs will be written", required=True)
-def main(train, test, write_to):
+def main(train, test, pipeline, write_to):
     """
     Evaluate a trained model on test data and save evaluation metrics and confusion matrix.
     """
     # Define the path to the saved model file
-    model_path = os.path.join(write_to, "models", "disease_pipeline.pickle")
+    model_path = pipeline
 
     # Ensure necessary directories exist
     os.makedirs(os.path.join(write_to, "tables"), exist_ok=True)

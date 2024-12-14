@@ -33,8 +33,10 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 @click.command()
 @click.option('--train', type=str, help="Location of train data file")
+@click.option('--seed', type =int, help="Set seed for reproducibility")
 @click.option('--write-to', type=str, help="Path to master directory where outputs will be written")
-def main(train, write_to):
+
+def main(train, seed, write_to):
 
     # Ensure necessary directories exist
     os.makedirs(os.path.join(write_to, "tables"), exist_ok=True)
@@ -82,7 +84,7 @@ def main(train, write_to):
     
     # 3. Training models
     models = class_model_trainer(preprocessor, X_train, y_train, pos_lable = '> 50% diameter narrowing', 
-                        seed=123, write_to=write_to, 
+                        seed=seed, write_to=write_to, 
                         cv = 5, metrics = classification_metrics)
 
     # 4. HYPERPARAMETER OPTIMIZATION

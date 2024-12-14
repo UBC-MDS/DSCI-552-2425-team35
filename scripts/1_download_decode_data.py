@@ -9,12 +9,20 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from ucimlrepo import fetch_ucirepo
 import pandas as pd
 
+import ssl
+import urllib.request
+ssl._create_default_https_context = ssl._create_unverified_context
+
 @click.command()
 @click.option('--id', type=int, help="ID of the UCI repo dataset to download")
 @click.option('--write-to', type=str, help="Path to directory where raw data will be written to")
 
 def main(id, write_to):
     """Downloads data from the UCI package to a local filepath and decodes variables and column headers."""
+    
+    # Ensure necessary directories exist
+    os.makedirs(write_to, exist_ok=True)
+    
     # fetch dataset
     heart_disease = fetch_ucirepo(id=id) 
     data = heart_disease.data

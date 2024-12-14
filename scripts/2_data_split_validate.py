@@ -121,9 +121,7 @@ def main(split, raw_data, write_to):
     check_feat_lab_corr = FeatureLabelCorrelation().add_condition_feature_pps_less_than(0.9)
     check_feat_lab_corr_result = check_feat_lab_corr.run(dataset=train_ds)
 
-    #verify correlations: feature-feature:
-    from deepchecks.tabular.datasets.classification import adult
-    from deepchecks.tabular.checks.data_integrity import FeatureFeatureCorrelation
+
     
     check = FeatureFeatureCorrelation()
     

@@ -1,6 +1,6 @@
 ---
 title: "Creating Machine learning Model to Predict Presence of Coronary Artery Disease"
-author: "Marek Boulerice, Sarah Eshafi, Long Nguyen, Hui Tang"
+author: "Long Nguyen, Marek Boulerice, Sarah Eshafi, Hui Tang"
 format: html
 editor: source
 bibliography: references.bib

@@ -2,10 +2,17 @@
 # author: Hui Tang
 # date: 2024-12-07
 
-import click
+import sys
 import os
+
+# Dynamically add the src directory to the Python path
+src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../src"))
+if src_path not in sys.path:
+    sys.path.append(src_path)
+
+import click
 import pandas as pd
-from src.eda_utils import (
+from eda_utils import (
     create_numeric_distributions,
     create_categorical_distributions,
     create_correlation_heatmap,

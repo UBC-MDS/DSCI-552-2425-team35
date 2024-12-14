@@ -1,8 +1,23 @@
-import click
+# 3_eda.py
+# author: Hui Tang
+# date: 2024-12-07
+
+import sys
 import os
+
+# Dynamically add the src directory to the Python path
+src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../src"))
+if src_path not in sys.path:
+    sys.path.append(src_path)
+
+import click
 import pandas as pd
-import altair as alt
-import altair_ally as aly
+from eda_utils import (
+    create_numeric_distributions,
+    create_categorical_distributions,
+    create_correlation_heatmap,
+    save_high_correlations
+)
 
 
 @click.command()
@@ -19,18 +34,16 @@ import altair_ally as aly
     help='Directory where output figures will be saved.'
 )
 def main(train, write_to):
-    # Ensure output directory exists
+    # Ensure output directories exist
     output_dir = os.path.join(write_to, "figures")
+    table_dir = os.path.join(write_to, "tables")
     os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(table_dir, exist_ok=True)
 
     # Load data
     train_df = pd.read_csv(train)
 
-    # Altair configurations
-    alt.data_transformers.enable('default', max_rows=None)
-    aly.alt.data_transformers.enable('vegafusion')
-
-    # Univariate distribution for quantitative variables
+    # Define numeric and categorical columns
     numeric_columns = [
         'Age (in years)',
         'Resting blood pressure (in mm Hg on admission to the hospital)',
@@ -39,15 +52,6 @@ def main(train, write_to):
         'ST depression induced by exercise relative to rest',
         'Number of major vessels (0–3) colored by fluoroscopy'
     ]
-
-    # Visualization for numeric columns
-    numeric_dist_plot = aly.dist(
-        train_df[numeric_columns + ['Diagnosis of heart disease']],
-        color='Diagnosis of heart disease'
-    )
-    numeric_dist_plot.save(os.path.join(output_dir, "numeric_distributions.png"))
-
-    # Visualization for categorical variables
     categorical_columns = [
         'Sex',
         'Chest pain type',
@@ -58,30 +62,14 @@ def main(train, write_to):
         'Thalassemia'
     ]
 
-    categorical_dist_plot = aly.dist(
-        train_df[categorical_columns + ['Diagnosis of heart disease']],
-        dtype='object',
-        color='Diagnosis of heart disease'
-    )
-    categorical_dist_plot.save(os.path.join(output_dir, "categorical_distributions.png"))
+    # Handle nulls for categorical columns
+    train_df = train_df.dropna(subset=categorical_columns)
 
-    # Pairwise correlations for numeric variables
-    correlation_plot = aly.corr(train_df[numeric_columns])
-    correlation_plot.save(os.path.join(output_dir, "correlation_matrix.png"))
-
-    # Pairplot-like visualization (scatterplot matrix)
-    pairwise_plot = alt.Chart(train_df.sample(min(len(train_df), 300))).mark_point().encode(
-        x=alt.X(alt.repeat("column"), type='quantitative'),
-        y=alt.Y(alt.repeat("row"), type='quantitative'),
-        color='Diagnosis of heart disease'
-    ).properties(
-        width=150,
-        height=150
-    ).repeat(
-        row=numeric_columns[:3],  # Use the first 3 numeric columns for rows
-        column=numeric_columns[:3]  # Use the first 3 numeric columns for columns
-    )
-    pairwise_plot.save(os.path.join(output_dir, "pairwise_relationships.png"))
+    # Call EDA functions
+    create_numeric_distributions(train_df, numeric_columns, output_dir)
+    create_categorical_distributions(train_df, categorical_columns, output_dir)
+    create_correlation_heatmap(train_df, numeric_columns, output_dir)
+    save_high_correlations(train_df, numeric_columns, table_dir)
 
 
 if __name__ == "__main__":

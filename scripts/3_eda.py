@@ -53,7 +53,7 @@ def main(train, write_to):
     )
     numeric_dist_plot.save(os.path.join(output_dir, "numeric_distributions.png"))
 
-    # Visualization for categorical variables
+    # Handle nulls for categorical columns
     categorical_columns = [
         'Sex',
         'Chest pain type',
@@ -63,7 +63,9 @@ def main(train, write_to):
         'Slope of the peak exercise ST segment',
         'Thalassemia'
     ]
+    train_df = train_df.dropna(subset=categorical_columns)
 
+    # Visualization for categorical variables
     categorical_dist_plot = aly.dist(
         train_df[categorical_columns + ['Diagnosis of heart disease']]
         .assign(diagnosis_of_heart_disease=lambda x: x['Diagnosis of heart disease'].astype(object)),

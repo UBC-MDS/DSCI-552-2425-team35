@@ -5,8 +5,12 @@
 import click
 import os
 import pandas as pd
-import altair as alt
-import altair_ally as aly
+from src.eda_utils import (
+    create_numeric_distributions,
+    create_categorical_distributions,
+    create_correlation_heatmap,
+    save_high_correlations
+)
 
 
 @click.command()
@@ -32,11 +36,7 @@ def main(train, write_to):
     # Load data
     train_df = pd.read_csv(train)
 
-    # Altair configurations
-    alt.data_transformers.enable('default', max_rows=None)
-    aly.alt.data_transformers.enable('vegafusion')
-
-    # Univariate distribution for quantitative variables
+    # Define numeric and categorical columns
     numeric_columns = [
         'Age (in years)',
         'Resting blood pressure (in mm Hg on admission to the hospital)',
@@ -45,15 +45,6 @@ def main(train, write_to):
         'ST depression induced by exercise relative to rest',
         'Number of major vessels (0–3) colored by fluoroscopy'
     ]
-
-    # Visualization for numeric columns
-    numeric_dist_plot = aly.dist(
-        train_df[numeric_columns + ['Diagnosis of heart disease']],
-        color='Diagnosis of heart disease'
-    )
-    numeric_dist_plot.save(os.path.join(output_dir, "numeric_distributions.png"))
-
-    # Handle nulls for categorical columns
     categorical_columns = [
         'Sex',
         'Chest pain type',
@@ -63,53 +54,15 @@ def main(train, write_to):
         'Slope of the peak exercise ST segment',
         'Thalassemia'
     ]
+
+    # Handle nulls for categorical columns
     train_df = train_df.dropna(subset=categorical_columns)
 
-    # Visualization for categorical variables
-    categorical_dist_plot = aly.dist(
-        train_df[categorical_columns + ['Diagnosis of heart disease']]
-        .assign(diagnosis_of_heart_disease=lambda x: x['Diagnosis of heart disease'].astype(object)),
-        dtype='object',
-        color='Diagnosis of heart disease'
-    )
-    categorical_dist_plot.save(os.path.join(output_dir, "categorical_distributions.png"))
-
-    # Pairwise correlations for numeric variables
-    correlation_matrix = train_df[numeric_columns].corr()
-    correlation_matrix.to_csv(os.path.join(table_dir, "correlation_matrix.csv"))
-
-    # Identify high correlations
-    high_corr = correlation_matrix.stack().reset_index()
-    high_corr.columns = ['Variable 1', 'Variable 2', 'Correlation']
-    high_corr = high_corr[
-        (high_corr['Variable 1'] != high_corr['Variable 2']) &
-        (high_corr['Correlation'].abs() > 0.7)  # Threshold for "high correlation"
-    ].sort_values(by='Correlation', ascending=False)
-
-    high_corr.to_csv(os.path.join(table_dir, "high_correlations.csv"), index=False)
-
-    # Print the highly correlated variables to the console (optional)
-    print("Highly correlated variables (|correlation| > 0.7):")
-    print(high_corr)
-
-    # Save correlation heatmap
-    correlation_plot = aly.corr(train_df[numeric_columns])
-    correlation_plot.save(os.path.join(output_dir, "correlation_matrix.png"))
-
-    # Pairplot-like visualization (scatterplot matrix)
-    sample_size = min(len(train_df), 300)
-    pairwise_plot = alt.Chart(train_df.sample(sample_size)).mark_point().encode(
-        x=alt.X(alt.repeat("column"), type='quantitative'),
-        y=alt.Y(alt.repeat("row"), type='quantitative'),
-        color='Diagnosis of heart disease'
-    ).properties(
-        width=150,
-        height=150
-    ).repeat(
-        row=numeric_columns[:3],  # Use first three numeric columns for demonstration
-        column=numeric_columns[:3]
-    )
-    pairwise_plot.save(os.path.join(output_dir, "pairwise_relationships.png"))
+    # Call EDA functions
+    create_numeric_distributions(train_df, numeric_columns, output_dir)
+    create_categorical_distributions(train_df, categorical_columns, output_dir)
+    create_correlation_heatmap(train_df, numeric_columns, output_dir)
+    save_high_correlations(train_df, numeric_columns, table_dir)
 
 
 if __name__ == "__main__":

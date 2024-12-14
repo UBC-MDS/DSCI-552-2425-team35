@@ -2,24 +2,12 @@
 # author: Hui Tang
 # date: 2024-12-07
 
-import numpy as np
-import pandas as pd 
-import matplotlib.pyplot as plt
-import pickle
+import pandas as pd
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+import pickle
 import click
-from sklearn.metrics import ConfusionMatrixDisplay
-from sklearn.compose import make_column_transformer
-from sklearn.pipeline import make_pipeline
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.svm import SVC
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import RandomizedSearchCV, cross_validate, train_test_split
-from sklearn.dummy import DummyClassifier
-from sklearn.metrics import (make_scorer, precision_score, recall_score, f1_score)
+from sklearn.metrics import ConfusionMatrixDisplay, f1_score, recall_score
 
 @click.command()
 @click.option('--train', type=str, help="Location of train data file")

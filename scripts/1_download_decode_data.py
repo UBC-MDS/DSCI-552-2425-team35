@@ -1,6 +1,7 @@
 # 1_download_decode_data.py
 # author: Sarah Eshafi
 # date: 2024-12-05
+# Usage: python scripts/1_download_decode_data.py --id=45 --write-to=data/raw
 
 import click
 import os
@@ -24,6 +25,7 @@ def main(id, write_to):
     os.makedirs(write_to, exist_ok=True)
     
     # fetch dataset
+    print("Downloading raw data...")
     heart_disease = fetch_ucirepo(id=id) 
     data = heart_disease.data
 
@@ -72,6 +74,8 @@ def main(id, write_to):
 
     # Save the DataFrame to a CSV file
     heart_disease_df.to_csv(os.path.join(write_to, "pretransformed_heart_disease.csv"), index=False)
+
+    print("Raw data saved.")
 
 if __name__ == '__main__':
     main()

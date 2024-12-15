@@ -109,28 +109,28 @@ div.csl-indent {
 
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">1. SUMMARY</h2>
-<p>The following document covers a machine learning model analysis with a goal to predict angiographic coronary disease in patients. Data is pulled from patients undergoing angiography at the Cleveland Clinic in Ohio. This analysis is composed of Exploratory Data Analysis, testing of various machine models on a training data set, model optimization via hyperparameter, and final model performance analysis. The final model analysis shows that the model needs improvements before deployment for commercial use.</p>
+<p>The following document covers a machine learning model analysis with a goal to predict angiographic coronary disease in patients. Data is pulled from patients undergoing angiography at the Cleveland Clinic in Ohio. This analysis is composed of Exploratory Data Analysis, testing of various machine models on a training data set, model optimization via hyperparameter, and final model performance analysis. The final model analysis shows that the model performs well but there can be further improvements before deployment for commercial use.</p>
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">2. INTRODUCTION</h2>
-<p>Heart disease is the leading cause of death worldwide. Treating these heart diseases depends on capability of detecting symptoms and diagnosing cases earlier. One complication to diagnosing heart diseases is that many cases are found to be aymptomatic <span class="citation" data-cites="asymptomatic_coronary_disease">(<a href="#ref-asymptomatic_coronary_disease" role="doc-biblioref">Master 1969</a>)</span>. This creates an opportunity for application of machine learning methods, where the following question can be asked: Given various details about a clients medical status, can we create a statistical model to accurately predict whether the patient has the disease? The goal of the following analysis is to create a model that can anwswer this question. To be best suited to the problem, the model should retain a high accuracy while minimizing the number of false negatives (ie predicting that a patient does not have the heart disease when the patient in fact does).</p>
-<p>In particular, this analysis focuses on detection of angiographic coronary disease. The data set used in creating our model was taken from 303 patients undergoing angiography Cleveland Clinic in Cleveland, Ohio <span class="citation" data-cites="heart_disease_45">(<a href="#ref-heart_disease_45" role="doc-biblioref">Janosi and Detrano 1989</a>)</span>. From this procedure, a set of parameters were collected about each patients, and a diagnosis of whether the patient had the angiographic coronary disease (signified by a diameter narrowing of the coronary artery by at least 50%). This is to serve as the target variable in our analysis</p>
+<p>Heart disease is the leading cause of death worldwide <span class="citation" data-cites="cause_of_death">(<a href="#ref-cause_of_death" role="doc-biblioref">Organization 2024</a>)</span>. Treating these heart diseases depends on capability of detecting symptoms and diagnosing cases earlier. One complication to diagnosing heart diseases is that many cases are found to be asymptomatic <span class="citation" data-cites="asymptomatic_coronary_disease">(<a href="#ref-asymptomatic_coronary_disease" role="doc-biblioref">Master 1969</a>)</span>. This creates an opportunity for application of machine learning methods, where the following question can be asked: Given various details about a client’s medical status, can we create a statistical model to accurately predict whether the patient has the disease? The goal of the following analysis is to create a model that can answer this question. To be best suited to the problem, the model should retain a high accuracy while minimizing the number of false negatives (i.e.&nbsp;predicting that a patient does not have the heart disease when the patient in fact does).</p>
+<p>In particular, this analysis focuses on detection of angiographic coronary disease. The data set used in creating our model was taken from 303 patients undergoing angiography Cleveland Clinic in Cleveland, Ohio <span class="citation" data-cites="heart_disease_45">(<a href="#ref-heart_disease_45" role="doc-biblioref">Janosi and Detrano 1989</a>)</span>. From this procedure, a set of parameters were collected on each patient, and a diagnosis of whether the patient had the angiographic coronary disease (signified by a diameter narrowing of the coronary artery by at least 50%). This is to serve as the target variable in our analysis.</p>
 <p>The set of parameters collected during the procedure, used as our features for model training, are as follows:</p>
 <ul>
 <li><strong>Age (in years)</strong> : Age of patient (years)</li>
 <li><strong>Sex</strong> : Sex of patient (male or female)</li>
 <li><strong>Chest pain type</strong>: categorical feature describing the type of pain experienced by the patient</li>
 <li><strong>Resting Blood Pressure</strong>: numeric feature giving patients resting blood pressure</li>
-<li><strong>Serum Cholesterol</strong> : numneric feature giving the patients Serum cholesterol in mg/dl</li>
+<li><strong>Serum Cholesterol</strong> : numeric feature giving the patients Serum cholesterol in mg/dl</li>
 <li><strong>Fasting blood sugar &gt; 120 mg/dl</strong> : binary feature indicating whether the patients Blood sugar level while fasting exceeded 120 mg/dl</li>
 <li><strong>Resting electrocardiographic results</strong>: categorical feature reporting patients ECG results</li>
-<li><strong>Maximum heart rate achieved</strong>: numeric feature giving maximum heart rate achieved by patent</li>
+<li><strong>Maximum heart rate achieved</strong>: numeric feature giving maximum heart rate achieved by patient</li>
 <li><strong>Exercise-induced angina</strong>: binary feature indicating whether patient underwent exercise induced angina</li>
 <li><strong>ST depression induced by exercise relative to rest</strong>: numeric feature indicating the ST depression induced by exercise relative to rest</li>
 <li><strong>Slope of the peak exercise ST segment</strong></li>
 <li><strong>Thalassemia</strong> : categorical feature indicating if patient suffered from Thalassemia</li>
 </ul>
-<p>The following sections will discuss the decisions made and results in our Exploratory Data analysis, Machine learning model training, and final model performance</p>
+<p>The following sections will discuss the decisions made and results in our Exploratory Data analysis, Machine learning model training, and final model performance.</p>
 <p>This report also drew information from the study done by <span class="citation" data-cites="OFlaherty2008">(<a href="#ref-OFlaherty2008" role="doc-biblioref">O’Flaherty et al. 2008</a>)</span> and <span class="citation" data-cites="thalassemia">(<a href="#ref-thalassemia" role="doc-biblioref">Athanasios Aessopos 2007</a>)</span></p>
 </section>
 <section id="data-validation-cleaning" class="level2">
@@ -143,7 +143,7 @@ div.csl-indent {
 Table&nbsp;1: Preview of cleaned data.
 </figcaption>
 <div aria-describedby="tbl-head-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="10">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="2">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 3%">
@@ -181,83 +181,83 @@ Table&nbsp;1: Preview of cleaned data.
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">65</td>
-<td style="text-align: left;">male</td>
-<td style="text-align: left;">asymptomatic</td>
-<td style="text-align: right;">120</td>
-<td style="text-align: right;">177</td>
-<td style="text-align: left;">False</td>
-<td style="text-align: left;">normal</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: left;">upsloping</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">reversable defect</td>
-<td style="text-align: left;">&lt; 50% diameter narrowing</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">52</td>
+<td style="text-align: right;">44</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">non-anginal pain</td>
-<td style="text-align: right;">136</td>
-<td style="text-align: right;">196</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">242</td>
 <td style="text-align: left;">False</td>
-<td style="text-align: left;">showing probable or definite left ventricular hypertrophy by Estes’ criteria</td>
-<td style="text-align: right;">169</td>
+<td style="text-align: left;">normal</td>
+<td style="text-align: right;">149</td>
 <td style="text-align: left;">no</td>
-<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: left;">flat</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">normal</td>
+<td style="text-align: left;">&lt; 50% diameter narrowing</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">45</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: left;">atypical angina</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: left;">False</td>
+<td style="text-align: left;">normal</td>
+<td style="text-align: right;">138</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: left;">flat</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">normal</td>
 <td style="text-align: left;">&lt; 50% diameter narrowing</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">62</td>
 <td style="text-align: left;">male</td>
-<td style="text-align: left;">typical angina</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">199</td>
+<td style="text-align: left;">non-anginal pain</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">231</td>
 <td style="text-align: left;">False</td>
 <td style="text-align: left;">normal</td>
-<td style="text-align: right;">178</td>
-<td style="text-align: left;">yes</td>
-<td style="text-align: right;">1.4</td>
-<td style="text-align: left;">upsloping</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">146</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: left;">flat</td>
+<td style="text-align: right;">3</td>
 <td style="text-align: left;">reversable defect</td>
 <td style="text-align: left;">&lt; 50% diameter narrowing</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">47</td>
+<td style="text-align: right;">53</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">non-anginal pain</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">243</td>
-<td style="text-align: left;">False</td>
-<td style="text-align: left;">normal</td>
-<td style="text-align: right;">152</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">246</td>
+<td style="text-align: left;">True</td>
+<td style="text-align: left;">showing probable or definite left ventricular hypertrophy by Estes’ criteria</td>
+<td style="text-align: right;">173</td>
 <td style="text-align: left;">no</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">upsloping</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
 <td style="text-align: left;">normal</td>
-<td style="text-align: left;">&gt; 50% diameter narrowing</td>
+<td style="text-align: left;">&lt; 50% diameter narrowing</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">43</td>
+<td style="text-align: right;">41</td>
 <td style="text-align: left;">male</td>
-<td style="text-align: left;">asymptomatic</td>
-<td style="text-align: right;">115</td>
-<td style="text-align: right;">303</td>
+<td style="text-align: left;">atypical angina</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">203</td>
 <td style="text-align: left;">False</td>
 <td style="text-align: left;">normal</td>
-<td style="text-align: right;">181</td>
+<td style="text-align: right;">132</td>
 <td style="text-align: left;">no</td>
-<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: left;">flat</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: left;">normal</td>
+<td style="text-align: left;">fixed defect</td>
 <td style="text-align: left;">&lt; 50% diameter narrowing</td>
 </tr>
 </tbody>
@@ -272,7 +272,7 @@ Table&nbsp;1: Preview of cleaned data.
 <section id="method" class="level2">
 <h2 class="anchored" data-anchor-id="method">4. METHOD</h2>
 <p>The following section outlines the steps taken in manipulating our data and creating our model.</p>
-<p>EDA is first conducted to obtain an idea of feature importance and to establish any important correlations to watch for. Machine learning analysis is then performed, where multiple models are tested and their performance compared. The best performing model is selected to proceed with. On this model, hyperparameter optimization is completed via random search to tune our model and obtain best results. Finally, the model is trained and tested on a separate data set, and evaluated for performance.</p>
+<p>EDA is first conducted to obtain an idea of feature importance and to establish any important correlations to watch for. Machine learning analysis is then performed, where multiple models are tested and their performance compared. The best performing model is selected to proceed with. On this model, hyperparameter optimization is completed via random search to tune our model and obtain best results. Finally, the model is trained and tested on a separate data set and evaluated for performance.</p>
 <section id="eda" class="level3">
 <h3 class="anchored" data-anchor-id="eda">4.1 EDA</h3>
 <p>In this section, preliminary analysis is conducted to obtain an idea of possible correlations between features to be on the look out for. The results are presented below.</p>
@@ -286,7 +286,7 @@ Figure&nbsp;1: Distributions of Categorical Features
 </figcaption>
 </figure>
 </div>
-<p>From <a href="#fig-cat-dist" class="quarto-xref">Figure&nbsp;1</a> above, we can see that there is class imbalance in the target (diagnosis of heart disease). This means we will need to consider balanced scoring metrics and models.</p>
+<p>From <a href="#fig-cat-dist" class="quarto-xref">Figure&nbsp;1</a> above, we can see that there is some class imbalance in the target (diagnosis of heart disease). This means we will need to consider balanced scoring metrics and models.</p>
 <div id="fig-num-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-num-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -312,18 +312,18 @@ Figure&nbsp;3: Correlation Matrix
 </section>
 <section id="ml-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="ml-analysis">4.2 ML-Analysis</h3>
-<p>The following section outlines the procedure taken in creating our model and testing it on our data set. As this is a classification problem (predict whether the patient has the disease or not), the chosen models for testing in this analyis are a Logistic Regression model and a Suport Vector Classifier. These two models were selected as they have been shown to historically perform well on real world data sets.</p>
-<p>Since this data set is somewhat imbalanced (~80/20 split on non-disease vs disease), the primary scoring metric to evaluate these models will be F1 score, though model accuracy is still taken into consideration. Due to the nature of the analysis, special attention is taken to minimize false negatives as they represent the most damaging type of error (predicting that a patient is free of the disease when he does in fact have it). To this effect, we look to maximize Recall.</p>
+<p>The following section outlines the procedure taken in creating our model and testing it on our data set. As this is a classification problem (predict whether the patient has the disease or not), the chosen models for testing in this analysis are a Logistic Regression model and a Support Vector Classifier. These two models were selected as they have been shown to historically perform well on real world data sets.</p>
+<p>Since this data set is somewhat imbalanced, the primary scoring metric to evaluate these models will be F1 score, though model accuracy is still taken into consideration. Due to the nature of the analysis, special attention is taken to minimize false negatives as they represent the most damaging type of error (predicting that a patient is free of the disease when he does in fact have it). To this effect, we look to maximize Recall.</p>
 <p>The framework upon which this analysis is based has been adapted from DSCI573 Lab1.</p>
 <section id="data-preprocessing" class="level4">
 <h4 class="anchored" data-anchor-id="data-preprocessing">4.2.1. Data Preprocessing</h4>
-<p>Features are sorted by type, and a column transformer object is created. On categorical columns, simple imputing is applied filling missing values with the most frequently occuring value. One hot encoding is then performed.</p>
-<p>For numerical feature, standard scaling is applied to keep all features within the same range</p>
+<p>Features are sorted by type, and a column transformer object is created. On categorical columns, simple imputing is applied filling missing values with the most frequently occurring value. One hot encoding is then performed.</p>
+<p>For numerical feature, standard scaling is applied to keep all features within the same range.</p>
 </section>
 <section id="model-creation" class="level4">
 <h4 class="anchored" data-anchor-id="model-creation">4.2.2. model creation</h4>
 <p>Basic models (default hyperparameter values) are now generated. A dummy model is first created to use as a baseline to use for comparison. Then, a logistic regressor and support vector classifier model is created. 5-fold cross validation (CV) is performed on each model and scores are returned.</p>
-<p>As discussed above, F1 score is to be the primary metric to evaluate model performance, with accuracy and recall as secondary metrics. This is reflected in the scoring metrics used in CV</p>
+<p>As discussed above, F1 score is to be the primary metric to evaluate model performance, with accuracy and recall as secondary metrics. This is reflected in the scoring metrics used in CV.</p>
 <p>Finally, a Confusion matrix was generated for each model to give an idea of false positive vs false negative rate.</p>
 </section>
 <section id="balanced-model-testing" class="level4">
@@ -333,7 +333,7 @@ Figure&nbsp;3: Correlation Matrix
 <section id="model-evaluation-and-selection" class="level4">
 <h4 class="anchored" data-anchor-id="model-evaluation-and-selection">4.2.4. Model Evaluation and Selection</h4>
 <p>With baseline models created, they are evaluated according to the criteria set above. CV scores of each model are presented below. First, standard deviation was evaluated to verify there are no abnormally performing models. Scores are presented in <a href="#tbl-model-cv-comps" class="quarto-xref">Table&nbsp;2</a> below.</p>
-<p>Comparing the metrics across models, Balanced logistic regression yields the highest recall and second highest f1_score. For these reasons, we choose to proceed with <code>LogisticRegression(class_weight="balanced")</code>.</p>
+<p>Comparing the metrics across models, Balanced logistic regression yields the highest recall and f1_score. For these reasons, we choose to proceed with <code>LogisticRegression(class_weight="balanced")</code>.</p>
 <div class="cell" data-execution_count="3">
 <div id="tbl-model-cv-comps" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="3">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -341,7 +341,7 @@ Figure&nbsp;3: Correlation Matrix
 Table&nbsp;2: Comparison of cross-validation scores across model options.
 </figcaption>
 <div aria-describedby="tbl-model-cv-comps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="11">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="3">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 25%">
@@ -365,10 +365,10 @@ Table&nbsp;2: Comparison of cross-validation scores across model options.
 <tr class="odd">
 <td style="text-align: left;">fit_time</td>
 <td style="text-align: right;">0.001</td>
-<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.008</td>
 <td style="text-align: right;">0.007</td>
-<td style="text-align: right;">0.009</td>
 <td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.006</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">score_time</td>
@@ -376,71 +376,71 @@ Table&nbsp;2: Comparison of cross-validation scores across model options.
 <td style="text-align: right;">0.005</td>
 <td style="text-align: right;">0.005</td>
 <td style="text-align: right;">0.005</td>
-<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.005</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_accuracy</td>
-<td style="text-align: right;">0.746</td>
-<td style="text-align: right;">0.781</td>
-<td style="text-align: right;">0.787</td>
-<td style="text-align: right;">0.751</td>
-<td style="text-align: right;">0.766</td>
+<td style="text-align: right;">0.582</td>
+<td style="text-align: right;">0.855</td>
+<td style="text-align: right;">0.832</td>
+<td style="text-align: right;">0.847</td>
+<td style="text-align: right;">0.832</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">train_accuracy</td>
-<td style="text-align: right;">0.746</td>
-<td style="text-align: right;">0.838</td>
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">0.813</td>
-<td style="text-align: right;">0.929</td>
+<td style="text-align: right;">0.582</td>
+<td style="text-align: right;">0.876</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">0.869</td>
+<td style="text-align: right;">0.92</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_precision</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.584</td>
-<td style="text-align: right;">0.693</td>
-<td style="text-align: right;">0.518</td>
-<td style="text-align: right;">0.528</td>
+<td style="text-align: right;">0.869</td>
+<td style="text-align: right;">0.858</td>
+<td style="text-align: right;">0.816</td>
+<td style="text-align: right;">0.813</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">train_precision</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.759</td>
-<td style="text-align: right;">0.976</td>
-<td style="text-align: right;">0.598</td>
-<td style="text-align: right;">0.817</td>
+<td style="text-align: right;">0.899</td>
+<td style="text-align: right;">0.945</td>
+<td style="text-align: right;">0.858</td>
+<td style="text-align: right;">0.923</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_recall</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.42</td>
-<td style="text-align: right;">0.26</td>
-<td style="text-align: right;">0.72</td>
-<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">0.771</td>
+<td style="text-align: right;">0.726</td>
+<td style="text-align: right;">0.825</td>
+<td style="text-align: right;">0.78</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">train_recall</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.525</td>
-<td style="text-align: right;">0.62</td>
-<td style="text-align: right;">0.815</td>
-<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.794</td>
+<td style="text-align: right;">0.833</td>
+<td style="text-align: right;">0.821</td>
+<td style="text-align: right;">0.881</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_f1</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.477</td>
-<td style="text-align: right;">0.362</td>
-<td style="text-align: right;">0.598</td>
-<td style="text-align: right;">0.619</td>
+<td style="text-align: right;">0.816</td>
+<td style="text-align: right;">0.783</td>
+<td style="text-align: right;">0.818</td>
+<td style="text-align: right;">0.795</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">train_f1</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.62</td>
-<td style="text-align: right;">0.755</td>
-<td style="text-align: right;">0.69</td>
-<td style="text-align: right;">0.869</td>
+<td style="text-align: right;">0.843</td>
+<td style="text-align: right;">0.885</td>
+<td style="text-align: right;">0.839</td>
+<td style="text-align: right;">0.901</td>
 </tr>
 </tbody>
 </table>
@@ -474,7 +474,7 @@ Figure&nbsp;4: Confusion Matrix on Test Data
 Table&nbsp;3: Best model metrics.
 </figcaption>
 <div aria-describedby="tbl-model-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="12">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="4">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -486,18 +486,18 @@ Table&nbsp;3: Best model metrics.
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">F1 Score</td>
-<td style="text-align: right;">0.628</td>
-<td style="text-align: right;">0.462</td>
+<td style="text-align: right;">0.836</td>
+<td style="text-align: right;">0.811</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Recall</td>
-<td style="text-align: right;">0.76</td>
-<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.817</td>
+<td style="text-align: right;">0.882</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Accuracy</td>
-<td style="text-align: right;">0.772</td>
-<td style="text-align: right;">0.682</td>
+<td style="text-align: right;">0.866</td>
+<td style="text-align: right;">0.759</td>
 </tr>
 </tbody>
 </table>
@@ -511,22 +511,21 @@ Table&nbsp;3: Best model metrics.
 </section>
 <section id="results-discussion" class="level2">
 <h2 class="anchored" data-anchor-id="results-discussion">5. RESULTS &amp; DISCUSSION</h2>
-<p>The model created needs further work and is not ready for deployment.</p>
-<p>Our final test results yielded a F1 score of 0.462 and there is a large discrepancy to the training F1 score (0.628). This indicates that the model is overfitting. It is important to note that the test dataset is small with only 22 observations, which is likely contributing to the low F1 score.</p>
-<p>Furthermore, our model has an accuracy of 68.2 percent. This value is worse than the baseline dummy accuracy, which again indicates that further work is required to improve the model.</p>
-<p>With hyper parameter tuning the model achieved a higher F1 score compared to original model (0.628 on train F1 score compared to 0.598 F1 score for base model cv score).</p>
+<p>The model created shows great promise and with a few additional checks and improvements could be ready for deployment.</p>
+<p>Our final test results yielded a F1 score of 0.811 and there is little discrepancy to the training F1 score (0.836). This indicates that the model does not have significant optimization bias.</p>
+<p>Furthermore, our model has an accuracy of 0.759. This value is better than the baseline dummy accuracy, but should be higher to avoid false negatives (which can be very damaging) or false positives (which can be costly to physicians).</p>
+<p>With hyper parameter tuning the model achieved a higher F1 score compared to original model (0.836 on train F1 score compared to 0.818 F1 score for base model cv score).</p>
 <p>To get more rigorous performance testing and confidence in our result in future iterations, there are several improvements we can make. It is recommended to seek further data, test more model types, and conduct feature engineering.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">6. CONCLUSION</h2>
-<p>The model created showed some promise, being able to correctly classify presence of angiographic coronary disease with an accuracy of (68.2 percent).</p>
-<p>However, the model performed poorly on F1 score and was not able to minimize the number of false negatives classified (recall of 0.6).</p>
+<p>The model created showed a lot of promise, being able to correctly classify presence of angiographic coronary disease with an accuracy of 0.759.</p>
+<p>The model performed fairly well on F1 score and was able to somewhat minimize the number of false negatives classified (recall of 0.882).</p>
 <p>There are some limitations to this report that should be noted both at the analysis level and application level.</p>
 <p>On the analysis side, only 2 models were tested. While their performance was encouraging, a more rigorous approach would test a variety of classifiers before proceeding with logistic regression.</p>
 <p>As well, further hyperparameter optimization could be conducted. While a wide range of C-values were tested, Only 50 possible values were tested from this range. An improvement to this would be to randomly sample from a log-uniform distribution to obtain our best C value.</p>
-<p>Lastly and perhaps most importantly, there is a large discrepancy between our test data set relative to the training data. The most reasonable explanation for this would be an test set too small to be representative.</p>
-<p>On the application side, we should note that this model was tested specifically for one type of heart disease. The scope of the data used in training should be taken into account before proceeding with prediction on new data. As well this model requires a significant amount of medical information about a patient in order to create a prediction. Most of the information used to create the features to train the model is obtained through angiography, a process which itself ends in a diagnosis of the disease. So it is worth noting that even a high performing model will not be immediately applicable, though it gives confidence on the process.</p>
-<p>Overall, we recommend further pursuing optimization of this model. Due to the high discrepancy between training and testing scores, we would strongly recommend performing further testing on the model on new, larger data sets before proceeding with it.</p>
+<p>On the application side, we should note that this model was tested specifically for one type of heart disease. The scope of the data used in training should be taken into account before proceeding with prediction on new data. As well this model requires a significant amount of medical information about a patient in order to create a prediction. Most of the information used to create the features to train the model is obtained through angiography, a process which itself ends in a diagnosis of the disease. So, it is worth noting that even a high performing model will not be immediately applicable, though it gives confidence on the process.</p>
+<p>Overall, we recommend further pursuing optimization of this model. While initial results are promising, we would strongly recommend performing further testing on the model on new, larger data sets before proceeding with it.</p>
 </section>
 <section id="references" class="level2 unnumbered">
 
@@ -545,6 +544,9 @@ Master, Arthur M. 1969. <span>“The Extent of Completely Asymptomatic Coronary 
 </div>
 <div id="ref-OFlaherty2008" class="csl-entry" role="listitem">
 O’Flaherty, M, E Ford, Steven Allender, P Scarborough, and S Capewell. 2008. <span>“<span class="nocase">Coronary heart disease trends in England and Wales from 1984 to 2004 : concealed levelling of mortality rates among young adults</span>,”</span> January. <a href="https://dro.deakin.edu.au/articles/journal_contribution/Coronary_heart_disease_trends_in_England_and_Wales_from_1984_to_2004_concealed_levelling_of_mortality_rates_among_young_adults/21047827">https://dro.deakin.edu.au/articles/journal_contribution/Coronary_heart_disease_trends_in_England_and_Wales_from_1984_to_2004_concealed_levelling_of_mortality_rates_among_young_adults/21047827</a>.
+</div>
+<div id="ref-cause_of_death" class="csl-entry" role="listitem">
+Organization, World Health. 2024. <span>“The Top 10 Causes of Death.”</span> <a href="https://www.who.int/news-room/fact-sheets/detail/the-top-10-causes-of-death">https://www.who.int/news-room/fact-sheets/detail/the-top-10-causes-of-death</a>.
 </div>
 </div></section></div></main>
 <!-- /main column -->

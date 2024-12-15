@@ -26,7 +26,7 @@ and final model performance analysis.
 The final model analysis shows that the model performs well but there can be further improvements before deployment for commercial use.
 
 ## 2. INTRODUCTION
-Heart disease is the leading cause of death worldwide. 
+Heart disease is the leading cause of death worldwide [@cause_of_death]. 
 Treating these heart diseases depends on capability of detecting symptoms and diagnosing cases earlier. 
 One complication to diagnosing heart diseases is that many cases are found to be asymptomatic [@asymptomatic_coronary_disease]. 
 This creates an opportunity for application of machine learning methods,

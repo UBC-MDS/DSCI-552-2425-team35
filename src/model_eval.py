@@ -6,8 +6,8 @@ import os
 import pandas as pd
 from sklearn.metrics import f1_score, recall_score
 
-def eval_model(model, X_train, y_train, X_test, y_test) :
-        """
+def eval_model(model, X_train, y_train, X_test, y_test):
+    """
     Evaluates a classification model given a predetermined set of evaluation metrics, and returns a data frame of the model's score
 
     This function evaluates the input model, which has been previously trained on the input train data.
@@ -30,7 +30,6 @@ def eval_model(model, X_train, y_train, X_test, y_test) :
     y_test : pandas.DataFrame
         The DataFrame containing target-data used for final model evaluation
 
-        
     Returns
     -------
     pandas.DataFrame
@@ -38,6 +37,7 @@ def eval_model(model, X_train, y_train, X_test, y_test) :
     """
     train_predictions = model.predict(X_train)
     test_predictions = model.predict(X_test)
+    
     metrics_df = pd.DataFrame({
         'Metric': ['F1 Score', 'Recall', 'Accuracy'],
         'Train': [
@@ -52,6 +52,6 @@ def eval_model(model, X_train, y_train, X_test, y_test) :
         ],
     })
     
-    return metrics_df = metrics_df.round(3)
+    return metrics_df.round(3)
 
 

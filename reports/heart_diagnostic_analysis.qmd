@@ -28,20 +28,20 @@ The final model analysis shows that the model performs well but there can be fur
 ## 2. INTRODUCTION
 Heart disease is the leading cause of death worldwide. 
 Treating these heart diseases depends on capability of detecting symptoms and diagnosing cases earlier. 
-One complication to diagnosing heart diseases is that many cases are found to be aymptomatic [@asymptomatic_coronary_disease]. 
+One complication to diagnosing heart diseases is that many cases are found to be asymptomatic [@asymptomatic_coronary_disease]. 
 This creates an opportunity for application of machine learning methods,
 where the following question can be asked:
-Given various details about a clients medical status, 
+Given various details about a client's medical status, 
 can we create a statistical model to accurately predict whether the patient has the disease? 
-The goal of the following analysis is to create a model that can anwswer this question. 
+The goal of the following analysis is to create a model that can answer this question. 
 To be best suited to the problem, the model should retain a high accuracy while minimizing the number of false negatives 
-(ie predicting that a patient does not have the heart disease when the patient in fact does).
+(i.e. predicting that a patient does not have the heart disease when the patient in fact does).
 
 In particular, this analysis focuses on detection of angiographic coronary disease. 
 The data set used in creating our model was taken from 303 patients undergoing angiography Cleveland Clinic in Cleveland, Ohio [@heart_disease_45].
-From this procedure, a set of parameters were collected about each patients, 
+From this procedure, a set of parameters were collected on each patient, 
 and a diagnosis of whether the patient had the angiographic coronary disease (signified by a diameter narrowing of the coronary artery by at least 50%).
-This is to serve as the target variable in our analysis
+This is to serve as the target variable in our analysis.
 
 The set of parameters collected during the procedure,
 used as our features for model training, are as follows:
@@ -50,17 +50,17 @@ used as our features for model training, are as follows:
 - **Sex** : Sex of patient (male or female)
 - **Chest pain type**: categorical feature describing the type of pain experienced by the patient
 - **Resting Blood Pressure**: numeric feature giving patients resting blood pressure
-- **Serum Cholesterol** : numneric feature giving the patients Serum cholesterol in mg/dl
+- **Serum Cholesterol** : numeric feature giving the patients Serum cholesterol in mg/dl
 - **Fasting blood sugar > 120 mg/dl** : binary feature indicating whether the patients Blood sugar level while fasting exceeded 120 mg/dl
 - **Resting electrocardiographic results**:  categorical feature reporting patients ECG results
-- **Maximum heart rate achieved**: numeric feature giving maximum heart rate achieved by patent
+- **Maximum heart rate achieved**: numeric feature giving maximum heart rate achieved by patient
 - **Exercise-induced angina**: binary feature indicating whether patient underwent exercise induced angina
 - **ST depression induced by exercise relative to rest**: numeric feature indicating the ST depression induced by exercise relative to rest
 - **Slope of the peak exercise ST segment**
 - **Thalassemia** : categorical feature indicating if patient suffered from Thalassemia
 
 
-The following sections will discuss the decisions made and results in our Exploratory Data analysis, Machine learning model training, and final model performance
+The following sections will discuss the decisions made and results in our Exploratory Data analysis, Machine learning model training, and final model performance.
 
 This report also drew information from the study done by [@OFlaherty2008] and [@thalassemia]
 
@@ -92,7 +92,7 @@ EDA is first conducted to obtain an idea of feature importance and to establish 
 Machine learning analysis is then performed, where multiple models are tested and their performance compared. 
 The best performing model is selected to proceed with. 
 On this model, hyperparameter optimization is completed via random search to tune our model and obtain best results.
-Finally, the model is trained and tested on a separate data set, and evaluated for performance.
+Finally, the model is trained and tested on a separate data set and evaluated for performance.
 
 ### 4.1 EDA
 In this section, preliminary analysis is conducted 
@@ -115,7 +115,7 @@ Finally, in @fig-cor-mat, we can see that there are correlations in some variabl
 
 The following section outlines the procedure taken in creating our model and testing it on our data set.
 As this is a classification problem (predict whether the patient has the disease or not), 
-the chosen models for testing in this analyis are a Logistic Regression model and a Suport Vector Classifier. 
+the chosen models for testing in this analysis are a Logistic Regression model and a Support Vector Classifier. 
 These two models were selected as they have been shown to historically perform well on real world data sets.
 
 Since this data set is somewhat imbalanced, 
@@ -130,10 +130,10 @@ The framework upon which this analysis is based has been adapted from DSCI573 La
 #### 4.2.1. Data Preprocessing
 Features are sorted by type, 
 and a column transformer object is created. 
-On categorical columns, simple imputing is applied filling missing values with the most frequently occuring value. 
+On categorical columns, simple imputing is applied filling missing values with the most frequently occurring value. 
 One hot encoding is then performed. 
 
-For numerical feature, standard scaling is applied to keep all features within the same range
+For numerical feature, standard scaling is applied to keep all features within the same range.
 
 #### 4.2.2. model creation
 
@@ -143,14 +143,14 @@ Then, a logistic regressor and support vector classifier model is created.
 5-fold cross validation (CV) is performed on each model and scores are returned.
 
 As discussed above, F1 score is to be the primary metric to evaluate model performance, 
-with accuracy and recall as secondary metrics. This is reflected in the scoring metrics used in CV
+with accuracy and recall as secondary metrics. This is reflected in the scoring metrics used in CV.
 
 Finally, a Confusion matrix was generated for each model to give an idea of false positive vs false negative rate. 
 
 
 #### 4.2.3. Balanced model testing
 
-Step 4.2.2 is repeated, this time creating balanced logistic regressor and SVC  models,
+Step 4.2.2 is repeated, this time creating balanced logistic regressor and SVC models,
 with all other hyperparameters held the same. Confusion matrices were once again generated to evaluate the types of errors seen.
 The goal of this step is to gain an understanding of how much accuracy is sacrificed at the benefit of improving F1 score.
 
@@ -208,7 +208,7 @@ Markdown(model_results_table.to_markdown(index = False))
 
 The model created shows great promise and with a few additional checks and improvements could be ready for deployment. 
 
-Our final test results yielded a F1 score of `{python} best_test_f1` and there is little discrepancy to the training F1 score (`{python} best_train_f1`). This indicates that the model does not have signifcant optimization bias.
+Our final test results yielded a F1 score of `{python} best_test_f1` and there is little discrepancy to the training F1 score (`{python} best_train_f1`). This indicates that the model does not have significant optimization bias.
 
 Furthermore, our model has an accuracy of `{python} best_test_accuracy`. This value is better than the baseline dummy accuracy, but should be higher to avoid false negatives (which can be very damaging) or false positives (which can be costly to physicians).
 
@@ -246,12 +246,12 @@ The scope of the data used in training should be taken into account before proce
 As well this model requires a significant amount of medical information about a patient in order to create a prediction. 
 Most of the information used to create the features to train the model is obtained through angiography, 
 a process which itself ends in a diagnosis of the disease.
-So it is worth noting that even a high performing model will not be immediately applicable, 
+So, it is worth noting that even a high performing model will not be immediately applicable, 
 though it gives confidence on the process. 
 
 
 Overall, we recommend further pursuing optimization of this model. 
-While intial results are promising, 
+While initial results are promising, 
 we would strongly recommend performing further testing on the model on new, 
 larger data sets before proceeding with it.
 

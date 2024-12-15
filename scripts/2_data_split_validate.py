@@ -27,6 +27,7 @@ def main(split, raw_data, write_to):
     df = pd.read_csv(raw_data)
 
     # Initial data cleaning
+    print("Processing and validating data...")
     df = df[df['Diagnosis of heart disease'] <= 3]
     df['Diagnosis of heart disease'] = df['Diagnosis of heart disease'].replace(
         {0: '< 50% diameter narrowing', 1: '> 50% diameter narrowing',
@@ -71,6 +72,8 @@ def main(split, raw_data, write_to):
     # Save the DataFrame to a CSV file
     train_df.to_csv(os.path.join(write_to, "train_df.csv"), index=False)
     test_df.to_csv(os.path.join(write_to, "test_df.csv"), index=False)
+
+    print("Data processed and validated.")
 
 if __name__ == '__main__':
     main()

@@ -24,6 +24,7 @@ def main(id, write_to):
     os.makedirs(write_to, exist_ok=True)
     
     # fetch dataset
+    print("Downloading raw data...")
     heart_disease = fetch_ucirepo(id=id) 
     data = heart_disease.data
 
@@ -72,6 +73,8 @@ def main(id, write_to):
 
     # Save the DataFrame to a CSV file
     heart_disease_df.to_csv(os.path.join(write_to, "pretransformed_heart_disease.csv"), index=False)
+
+    print("Raw data saved.")
 
 if __name__ == '__main__':
     main()

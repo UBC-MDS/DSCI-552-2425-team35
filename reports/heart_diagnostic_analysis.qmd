@@ -23,7 +23,7 @@ This analysis is composed of Exploratory Data Analysis,
 testing of various machine models on a training data set, 
 model optimization via hyperparameter, 
 and final model performance analysis. 
-The final model analysis shows that the model needs improvements before deployment for commercial use.
+The final model analysis shows that the model performs well but there can be further improvements before deployment for commercial use.
 
 ## 2. INTRODUCTION
 Heart disease is the leading cause of death worldwide. 
@@ -100,7 +100,7 @@ to obtain an idea of possible correlations between features to be on the look ou
 
 ![Distributions of Categorical Features](../results/figures/categorical_distributions.png){#fig-cat-dist}
 
-From @fig-cat-dist above, we can see that there is class imbalance in the target (diagnosis of heart disease). This means we will need to consider balanced scoring metrics and models.
+From @fig-cat-dist above, we can see that there is some class imbalance in the target (diagnosis of heart disease). This means we will need to consider balanced scoring metrics and models.
 
 ![Distributions of Numeric Features](../results/figures/numeric_distributions.png){#fig-num-dist}
 
@@ -118,7 +118,7 @@ As this is a classification problem (predict whether the patient has the disease
 the chosen models for testing in this analyis are a Logistic Regression model and a Suport Vector Classifier. 
 These two models were selected as they have been shown to historically perform well on real world data sets.
 
-Since this data set is somewhat imbalanced (~80/20 split on non-disease vs disease), 
+Since this data set is somewhat imbalanced, 
 the primary scoring metric to evaluate these models will be F1 score, 
 though model accuracy is still taken into consideration. 
 Due to the nature of the analysis, special attention is taken to minimize false negatives as they represent the most damaging type of error
@@ -163,7 +163,7 @@ Scores are presented in @tbl-model-cv-comps below.
 
 Comparing the metrics across models, 
 Balanced logistic regression yields the highest recall
-and second highest f1_score. 
+and f1_score. 
 For these reasons, we choose to proceed with `LogisticRegression(class_weight="balanced")`.
 
 ```{python}
@@ -206,11 +206,11 @@ Markdown(model_results_table.to_markdown(index = False))
 
 ## 5. RESULTS & DISCUSSION
 
-The model created needs further work and is not ready for deployment. 
+The model created shows great promise and with a few additional checks and improvements could be ready for deployment. 
 
-Our final test results yielded a F1 score of `{python} best_test_f1` and there is a large discrepancy to the training F1 score (`{python} best_train_f1`). This indicates that the model is overfitting. It is important to note that the test dataset is small with only 22 observations, which is likely contributing to the low F1 score.
+Our final test results yielded a F1 score of `{python} best_test_f1` and there is a large discrepancy to the training F1 score (`{python} best_train_f1`). This indicates that the model is overfitting. It is important to note that the test dataset is small with only 29 observations.
 
-Furthermore, our model has an accuracy of `{python} best_test_accuracy` percent. This value is worse than the baseline dummy accuracy, which again indicates that further work is required to improve the model.
+Furthermore, our model has an accuracy of `{python} best_test_accuracy` percent. This value is better than the baseline dummy accuracy, but should be higher to avoid false negatives (which can be very damaging) or false positives (which can be costly to physicians).
 
 With hyper parameter tuning the model achieved a higher F1 score 
 compared to original model (`{python} best_train_f1` on train F1 score compared to `{python} lr_cv_f1` F1 score for base model cv score). 
@@ -220,10 +220,10 @@ To get more rigorous performance testing and confidence in our result in future 
 
 ## 6. CONCLUSION
 
-The model created showed some promise, 
-being able to correctly classify presence of angiographic coronary disease with an accuracy of (`{python} best_test_accuracy` percent). 
+The model created showed a lot of promise, 
+being able to correctly classify presence of angiographic coronary disease with an accuracy of `{python} best_test_accuracy` percent. 
 
-However, the model performed poorly on F1 score and was not able to minimize the number of false negatives classified 
+The model performed fairly well on F1 score and was able to somewhat minimize the number of false negatives classified 
 (recall of `{python} best_test_recall`).
 
 There are some limitations to this report that should be noted 

@@ -27,9 +27,10 @@ def main(split, raw_data, write_to):
     df = pd.read_csv(raw_data)
 
     # Initial data cleaning
-    df = df[df['Diagnosis of heart disease'] <= 1]
+    df = df[df['Diagnosis of heart disease'] <= 3]
     df['Diagnosis of heart disease'] = df['Diagnosis of heart disease'].replace(
-        {0: '< 50% diameter narrowing', 1: '> 50% diameter narrowing'})
+        {0: '< 50% diameter narrowing', 1: '> 50% diameter narrowing',
+         2: '> 50% diameter narrowing', 3: '> 50% diameter narrowing'})
 
     
     # Validate data using function 

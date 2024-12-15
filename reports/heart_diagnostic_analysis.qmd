@@ -208,7 +208,7 @@ Markdown(model_results_table.to_markdown(index = False))
 
 The model created shows great promise and with a few additional checks and improvements could be ready for deployment. 
 
-Our final test results yielded a F1 score of `{python} best_test_f1` and there is a large discrepancy to the training F1 score (`{python} best_train_f1`). This indicates that the model is overfitting. It is important to note that the test dataset is small with only 29 observations.
+Our final test results yielded a F1 score of `{python} best_test_f1` and there is little discrepancy to the training F1 score (`{python} best_train_f1`). This indicates that the model does not have signifcant optimization bias.
 
 Furthermore, our model has an accuracy of `{python} best_test_accuracy`. This value is better than the baseline dummy accuracy, but should be higher to avoid false negatives (which can be very damaging) or false positives (which can be costly to physicians).
 
@@ -240,10 +240,6 @@ Only 50 possible values were tested from this range.
 An improvement to this would be to randomly sample from a log-uniform distribution 
 to obtain our best C value.
 
-Lastly and perhaps most importantly, 
-there is a large discrepancy between our test data set relative to the training data. 
-The most reasonable explanation for this would be an test set too small to be representative. 
-
 On the application side, 
 we should note that this model was tested specifically for one type of heart disease. 
 The scope of the data used in training should be taken into account before proceeding with prediction on new data. 
@@ -255,7 +251,7 @@ though it gives confidence on the process.
 
 
 Overall, we recommend further pursuing optimization of this model. 
-Due to the high discrepancy between training and testing scores, 
+While intial results are promising, 
 we would strongly recommend performing further testing on the model on new, 
 larger data sets before proceeding with it.
 

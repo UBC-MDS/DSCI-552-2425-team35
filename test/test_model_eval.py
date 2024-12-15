@@ -12,8 +12,19 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.model_eval import eval_model
 
 # Test data setup
-score_dummy = pd.DataFrame({
-    "Metric": ["F1", "Recall", "Accuracy"],
-    "Train": [0.6, 0.7, 0.8],
-    "Test": [0.5, 0.55, 0.5555],   
-})
+
+#Create dummy model
+
+#create dummy X_train, y_train, X_test, y_test data
+
+
+
+#Test cases to check
+
+#1 passed an empty data frame
+
+#2 Passed dataframe is wrong data type
+
+#3 missing values in data frames
+
+#4 failed to pass a model

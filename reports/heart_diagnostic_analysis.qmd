@@ -196,7 +196,7 @@ F1 score, Recall score and Accuracy are all computed across both data sets.
 #| label: tbl-model-results
 #| tbl-cap: Best model metrics.
 model_results_table = pd.read_csv("../results/tables/model_metrics.csv")
-best_test_accuracy = model_results_table.iloc[2, 2]*100
+best_test_accuracy = model_results_table.iloc[2, 2]
 best_train_f1 = model_results_table.iloc[0, 1]
 best_test_f1 = model_results_table.iloc[0, 2]
 best_test_recall = model_results_table.iloc[1, 2]
@@ -210,7 +210,7 @@ The model created shows great promise and with a few additional checks and impro
 
 Our final test results yielded a F1 score of `{python} best_test_f1` and there is a large discrepancy to the training F1 score (`{python} best_train_f1`). This indicates that the model is overfitting. It is important to note that the test dataset is small with only 29 observations.
 
-Furthermore, our model has an accuracy of `{python} best_test_accuracy` percent. This value is better than the baseline dummy accuracy, but should be higher to avoid false negatives (which can be very damaging) or false positives (which can be costly to physicians).
+Furthermore, our model has an accuracy of `{python} best_test_accuracy`. This value is better than the baseline dummy accuracy, but should be higher to avoid false negatives (which can be very damaging) or false positives (which can be costly to physicians).
 
 With hyper parameter tuning the model achieved a higher F1 score 
 compared to original model (`{python} best_train_f1` on train F1 score compared to `{python} lr_cv_f1` F1 score for base model cv score). 
@@ -221,7 +221,7 @@ To get more rigorous performance testing and confidence in our result in future 
 ## 6. CONCLUSION
 
 The model created showed a lot of promise, 
-being able to correctly classify presence of angiographic coronary disease with an accuracy of `{python} best_test_accuracy` percent. 
+being able to correctly classify presence of angiographic coronary disease with an accuracy of `{python} best_test_accuracy`. 
 
 The model performed fairly well on F1 score and was able to somewhat minimize the number of false negatives classified 
 (recall of `{python} best_test_recall`).

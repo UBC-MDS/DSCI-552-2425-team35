@@ -13,6 +13,7 @@ from deepchecks.tabular.checks import FeatureLabelCorrelation
 from deepchecks.tabular.datasets.classification import adult
 from deepchecks.tabular.checks.data_integrity import FeatureFeatureCorrelation
 from sklearn.model_selection import train_test_split
+import warnings
 from src.data_validation import validate_data
 
 @click.command()
@@ -30,11 +31,12 @@ def main(split, raw_data, write_to):
     df['Diagnosis of heart disease'] = df['Diagnosis of heart disease'].replace(
         {0: '< 50% diameter narrowing', 1: '> 50% diameter narrowing'})
 
-    print(df.head())
     
     # Validate data using function 
+    # Suppress specific warnings from deepchecks
+    warnings.filterwarnings("ignore", message="You are using deepchecks version", category=UserWarning)
+
     df = validate_data(df)
-    print(df.head())
 
     # Train-test split
     train_df, test_df = train_test_split(df, test_size=split)

@@ -1,6 +1,7 @@
 # 2_data_split_validate.py
 # author: Sarah Eshafi
 # date: 2024-12-05
+# Usage: python scripts/2_data_split_validate.py --split=0.1 --raw-data=data/raw/pretransformed_heart_disease.csv --write-to=data/processed
 
 import click
 import os

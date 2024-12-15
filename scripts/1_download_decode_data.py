@@ -1,6 +1,7 @@
 # 1_download_decode_data.py
 # author: Sarah Eshafi
 # date: 2024-12-05
+# Usage: python scripts/1_download_decode_data.py --id=45 --write-to=data/raw
 
 import click
 import os

@@ -3,10 +3,13 @@
 # date: 2024-12-07
 
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import pandas as pd
 import pickle
 import click
 from sklearn.metrics import ConfusionMatrixDisplay, f1_score, recall_score
+from src.model_eval import eval_model
 
 @click.command()
 @click.option('--train', type=str, help="Location of train data file")
@@ -16,6 +19,13 @@ from sklearn.metrics import ConfusionMatrixDisplay, f1_score, recall_score
 def main(train, test, pipeline, write_to):
     """
     Evaluate a trained model on test data and save evaluation metrics and confusion matrix.
+
+    Usage: 
+    python scripts/5_evaluate.py --train data/processed/train_df.csv \
+                                --test data/processed/test_df.csv \
+                                --pipeline results/models/disease_pipeline.pickle \
+                                --write-to results
+    
     """
 
     # Check if the model file exists
@@ -37,22 +47,9 @@ def main(train, test, pipeline, write_to):
     print(f"Model loaded successfully.")
 
     # Evaluate the model
-    train_predictions = best_model.predict(X_train)
-    test_predictions = best_model.predict(X_test)
-    metrics_df = pd.DataFrame({
-        'Metric': ['F1 Score', 'Recall', 'Accuracy'],
-        'Train': [
-            f1_score(y_train, train_predictions, average='binary', pos_label='> 50% diameter narrowing'),
-            recall_score(y_train, train_predictions, average='binary', pos_label='> 50% diameter narrowing'),
-            best_model.score(X_train, y_train),
-        ],
-        'Test': [
-            f1_score(y_test, test_predictions, average='binary', pos_label='> 50% diameter narrowing'),
-            recall_score(y_test, test_predictions, average='binary', pos_label='> 50% diameter narrowing'),
-            best_model.score(X_test, y_test),
-        ],
-    })
-    metrics_df = metrics_df.round(3)
+    metrics_df = eval_model(best_model,X_train, y_train, X_test, y_test)
+
+    #Save model score to csv
     metrics_df.to_csv(os.path.join(write_to, "tables", "model_metrics.csv"), index=False)
 
     # Save confusion matrix

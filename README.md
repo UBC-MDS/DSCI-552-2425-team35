@@ -2,7 +2,10 @@
 Contributors: Sarah Eshafi, Hui Tang, Long Nguyen, Marek Boulerice
 
 ## About
-This repository covers a machine learning model analysis with a goal to predict angiographic coronary disease in patients. Data is pulled from patients undergoing angiography at the Cleveland Clinic in Ohio. This analysis is composed of Exploratory Data Analysis, testing of various machine models on a training data set, model optimization via hyperparameter, and final model performance analysis. The final model is shown to have promising results, though limitations apply and further testing and optimization is recommended.
+This repository covers the creation of a machine learning model analysis with a goal to predict angiographic coronary disease in patients. Data is pulled from patients undergoing angiography at the Cleveland Clinic in Ohio. This analysis is composed of Exploratory Data Analysis, testing of various machine models on a training data set, model optimization via hyperparameter, and final model performance analysis. The final LogisticRegression model is shown to perform quite well on testing data, reporting final F1 scores of around 0.89. The Recall value on this model is also quite promising, at around 0.9. This indicates the model is able to predict the occurrence of heart disease consistently with very few false negative cases (misses). Nevertheless, a few limitations still apply to our model. while the recall is quite low, even missing a few cases of heart disease in patients would have devastating effects on lives of patients. As well, the model requires quite extensive medical information from patients to deliver an accurate prediction, which may make it difficult to roll out in commercial applications. With these factors in mind we suggest further tuning of the model, though initial results are promising.
+
+
+The final model is shown to have promising results, though limitations apply and further testing and optimization is recommended.
 
 ## Running the Report
 To run the analysis:
@@ -29,7 +32,7 @@ To run the analysis, open a terminal and run the following commands:
 ```
 python scripts/1_download_decode_data.py --id=45 --write-to=data/raw
 
-python scripts/2_data_split_validate.py --split=0.1 --raw-data=data/raw/pretransformed_heart_disease.csv --write-to=data/processed
+python scripts/2_data_split_validate.py --split=0.2 --raw-data=data/raw/pretransformed_heart_disease.csv --write-to=data/processed
 
 python scripts/3_eda.py  --train data/processed/train_df.csv --write-to results
 

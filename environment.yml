@@ -24,6 +24,7 @@ dependencies:
   - click=8.1.7
   - tabulate=0.9.0
   - quarto=1.5.57
+  - pytest=8.3.4 
   - pip:
       - deepchecks==0.18.1
       - altair-ally==0.1.1

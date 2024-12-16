@@ -51,7 +51,7 @@ def main(train, seed, write_to):
     train_data = pd.read_csv(train)
 
     # Split data into features and labels
-    X_train, y_train = train_data.drop(columns='Diagnosis of heart disease'), train_data['Diagnosis of heart disease']
+    X_train, y_train = train_data.drop(columns='Diagnosis of heart disease'), train_data[['Diagnosis of heart disease']]
 
     # 1. DATA PREPROCESSOR
     categorical_features = [

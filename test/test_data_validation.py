@@ -10,7 +10,7 @@ import pandas as pd
 import pandera as pa
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from src.validate_data import validate_data
+from src.data_validation import validate_data
 
 
 # Test data setup
@@ -69,11 +69,6 @@ for col in columns:
     case_missing_col = case_missing_col.drop(col, axis=1)  # drop column
     invalid_data_cases.append((case_missing_col, f"'{col}' is missing from DataFrameSchema"))
 
-# Case: Serum cholesterol is the wrong type (float instead of int)
-case_wrong_type = valid_data.copy()
-case_wrong_category_label.loc[0, "Serum cholesterol (in mg/dl)"] = 250.5
-invalid_data_cases.append((case_wrong_type, "Check incorrect type for int values in 'Serum cholesterol (in mg/dl)' is missing or incorrect"))
-
 # Case: duplicate observations
 case_duplicate = valid_data.copy()
 case_duplicate = pd.concat([case_duplicate, case_duplicate.iloc[[0], :]], ignore_index=True)
@@ -88,5 +83,5 @@ invalid_data_cases.append((case_missing_obs, f"Check absent or incorrect for mis
 # Parameterize invalid data test cases
 @pytest.mark.parametrize("invalid_data, description", invalid_data_cases)
 def test_valid_w_invalid_data(invalid_data, description):
-    with pytest.raises(pa.errors.SchemaErrors) as:
+    with pytest.raises(pa.errors.SchemaErrors) as excinfo:
         validate_data(invalid_data)

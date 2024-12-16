@@ -7,40 +7,50 @@ import pytest
 import os
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.dummy import DummyClassifier
+
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 from src.model_eval import eval_model
 
 # Test data setup
 
-#Create dummy model
+# Create synthetic dataset
+X, y = make_classification(
+    n_samples=100, 
+    n_features=10, 
+    n_informative=5, 
+    n_redundant=2, 
+    random_state=42
+)
+# Convert to DataFrame for compatibility
+X = pd.DataFrame(X, columns=[f"feature_{i}" for i in range(X.shape[1])])
+y = pd.Series(np.where(y == 1, '> 50% diameter narrowing', '<= 50% diameter narrowing'), name="target")
 
-#create dummy X_train, y_train, X_test, y_test data
-valid_data = pd.DataFrame({
-    "Age (in years)": [63, 37, 41],
-    "Sex": ["male", "female", "female"],
-    "Chest pain type": ["typical angina", "non-anginal pain", "atypical angina"],
-    "Resting blood pressure (in mm Hg on admission to the hospital)": [145, 130, 130],
-    "Serum cholesterol (in mg/dl)": [233, 250, 204],
-    "Fasting blood sugar > 120 mg/dl": [True, False, False],
-    "Resting electrocardiographic results": ["normal", "having ST-T wave abnormality", "normal"],
-    "Maximum heart rate achieved": [150, 187, 172],
-    "Exercise-induced angina": ["no", "no", "yes"],
-    "ST depression induced by exercise relative to rest": [2.3, 3.5, 1.4],
-    "Slope of the peak exercise ST segment": ["downsloping", "flat", "upsloping"],
-    "Number of major vessels (0–3) colored by fluoroscopy": [0.0, 0.0, 0.0],
-    "Thalassemia": ["fixed defect", "reversible defect", "normal"],
-    "Diagnosis of heart disease": ["< 50% diameter narrowing", "< 50% diameter narrowing", "> 50% diameter narrowing"]
-})
+# Split the dataset
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+#create dummy model to use to test function, and fit model
+dummy = DummyClassifier()
+dummy.fit(X_train, y_train)
+    
 
 
+# Test case 1: given appropriate imput the function outputs a dataframe of correct dimensions
 
-#Test cases to check
 
-#1 passed an empty data frame
+# Test Case 2: wrong type passed to function returns an error
+X_train_as_np = X_train.copy().to_numpy()
+def test_valid_data_type():
+    with pytest.raises(TypeError):
+        eval_model(dummy, X_train_as_np, y_train, X_test, y_test)
 
-#2 Passed dataframe is wrong data type
+# Test Case 3: empty data frame
+case_empty_data_frame = X_test.copy().iloc[0:0]
+def test_valid_data_empty_data_frame():
+    with pytest.raises(ValueError):
+        eval_model(dummy, X_train, y_train, case_empty_data_frame, y_test)
 
-#3 missing values in data frames
 
-#4 failed to pass a model

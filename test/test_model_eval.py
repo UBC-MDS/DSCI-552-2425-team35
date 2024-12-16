@@ -16,6 +16,22 @@ from src.model_eval import eval_model
 #Create dummy model
 
 #create dummy X_train, y_train, X_test, y_test data
+valid_data = pd.DataFrame({
+    "Age (in years)": [63, 37, 41],
+    "Sex": ["male", "female", "female"],
+    "Chest pain type": ["typical angina", "non-anginal pain", "atypical angina"],
+    "Resting blood pressure (in mm Hg on admission to the hospital)": [145, 130, 130],
+    "Serum cholesterol (in mg/dl)": [233, 250, 204],
+    "Fasting blood sugar > 120 mg/dl": [True, False, False],
+    "Resting electrocardiographic results": ["normal", "having ST-T wave abnormality", "normal"],
+    "Maximum heart rate achieved": [150, 187, 172],
+    "Exercise-induced angina": ["no", "no", "yes"],
+    "ST depression induced by exercise relative to rest": [2.3, 3.5, 1.4],
+    "Slope of the peak exercise ST segment": ["downsloping", "flat", "upsloping"],
+    "Number of major vessels (0–3) colored by fluoroscopy": [0.0, 0.0, 0.0],
+    "Thalassemia": ["fixed defect", "reversible defect", "normal"],
+    "Diagnosis of heart disease": ["< 50% diameter narrowing", "< 50% diameter narrowing", "> 50% diameter narrowing"]
+})
 
 
 

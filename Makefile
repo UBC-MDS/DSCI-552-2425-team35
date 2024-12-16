@@ -16,7 +16,7 @@ data/raw/pretransformed_heart_disease.csv: scripts/1_download_decode_data.py
 data/processed/train_df.csv data/processed/test_df.csv: scripts/2_data_split_validate.py \
 data/raw/pretransformed_heart_disease.csv
 	python scripts/2_data_split_validate.py \
-		--split=0.1 \
+		--split=0.2 \
 		--raw-data=data/raw/pretransformed_heart_disease.csv \
 		--write-to=data/processed
 
@@ -64,27 +64,27 @@ results/figures/correlation_matrix.png \
 results/tables/cross_val_score.csv \
 results/figures/confusion_matrix.png \
 results/tables/model_metrics.csv
-	quarto render report/adult_income_predictor_report.qmd --to html
-	quarto render report/adult_income_predictor_report.qmd --to pdf
+	quarto render reports/heart_diagnostic_analysis.qmd --to html
+	quarto render reports/heart_diagnostic_analysis.qmd --to pdf
 
-# clean up analysis / nuke everything
+
+# clean up analysis
 clean :
 	rm -rf data/raw/*
-# added this. confirm we do want to delete processed data as well :)
-    rm -rf data/processed/* 
-    rm -rf results/figures/categorical_distributions.png \
-            results/figures/confusion_matrix.png \
-            results/figures/correlation_matrix.png \
-            results/figures/numeric_distributions.png 
-    rm -rf results/models/disease_pipeline.pickle
-    rm -rf results/tables/correlation_matrix.csv \
-            results/tables/cross_val_score.csv \
-            results/tables/cross_val_std.csv \
-            results/tables/high_correlations.csv \
-            results/tables/model_metrics.csv \
- 	rm -rf report/heart_diagnostic_analysis_files.html \
-			report/heart_diagnostic_analysis.pdf \
-			report/heart_diagnostic_analysis           
+	rm -rf data/processed/* 
+	rm -rf results/figures/categorical_distributions.png \
+			results/figures/confusion_matrix.png \
+			results/figures/correlation_matrix.png \
+			results/figures/numeric_distributions.png 
+	rm -rf results/models/disease_pipeline.pickle
+	rm -rf results/tables/correlation_matrix.csv \
+			results/tables/cross_val_score.csv \
+			results/tables/cross_val_std.csv \
+			results/tables/high_correlations.csv \
+			results/tables/model_metrics.csv \
+ 	rm -rf reports/heart_diagnostic_analysis_files.html \
+			reports/heart_diagnostic_analysis.pdf \
+			reports/heart_diagnostic_analysis           
 
 
 

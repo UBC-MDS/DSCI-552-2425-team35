@@ -1,6 +1,10 @@
 # 5_evaluate.py
 # author: Hui Tang
 # date: 2024-12-07
+# Usage: python scripts/5_evaluate.py --train data/processed/train_df.csv \
+                                # --test data/processed/test_df.csv \
+                                # --pipeline results/models/disease_pipeline.pickle \
+                                # --write-to results
 
 import os
 import sys

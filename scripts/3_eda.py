@@ -1,6 +1,7 @@
 # 3_eda.py
 # author: Hui Tang
 # date: 2024-12-07
+# Usage: python scripts/3_eda.py  --train data/processed/train_df.csv --write-to results
 
 import sys
 import os

@@ -45,6 +45,8 @@ def main(train, write_to):
     os.makedirs(output_dir, exist_ok=True)
     os.makedirs(table_dir, exist_ok=True)
 
+    print("Generating EDA outputs...")
+    
     # Load data
     train_df = pd.read_csv(train)
 
@@ -76,6 +78,7 @@ def main(train, write_to):
     create_correlation_heatmap(train_df, numeric_columns, output_dir)
     save_high_correlations(train_df, numeric_columns, table_dir)
 
+    print("EDA outputs generated.")
 
 if __name__ == "__main__":
     main()

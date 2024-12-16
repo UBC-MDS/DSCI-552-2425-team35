@@ -27,7 +27,7 @@ X, y = make_classification(
 )
 # Convert to DataFrame for compatibility
 X = pd.DataFrame(X, columns=[f"feature_{i}" for i in range(X.shape[1])])
-y = pd.Series(np.where(y == 1, '> 50% diameter narrowing', '<= 50% diameter narrowing'), name="target")
+y = pd.DataFrame(np.where(y == 1, '> 50% diameter narrowing', '<= 50% diameter narrowing'), columns=["target"])
 
 # Split the dataset
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -50,8 +50,10 @@ def test_valid_data_empty_data_frame():
         eval_model(dummy, X_train, y_train, case_empty_data_frame, y_test)
 
 # Test case 3: given appropriate imput the function outputs a dataframe of correct dimensions
-def test_success(dummy, X_train, y_train, X_test, y_test):
-    eval_model(dummy, X_train, y_train, X_test, y_test)
+def test_success():
+    output_df = eval_model(dummy, X_train, y_train, X_test, y_test)
+    assert isinstance(output_df, pd.DataFrame), "Output is not a pandas DataFrame"
+    assert output_df.shape == (3, 3), "Output does not have the shape (3, 3)"
 
 print("All tests passed.")
 

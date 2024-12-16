@@ -92,8 +92,7 @@ def validate_data(heart_df):
         checks=[
             pa.Check(lambda heart_df: ~heart_df.duplicated().any(), error="Duplicate rows found."),
             pa.Check(lambda heart_df: ~(heart_df.isna().all(axis=1)).any(), error="Empty rows found.")
-        ],
-        drop_invalid_rows=True
+        ]
     )
     
     return schema.validate(heart_df, lazy = True)

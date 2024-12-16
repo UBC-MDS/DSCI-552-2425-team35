@@ -51,8 +51,7 @@ results/models/disease_pipeline.pickle
 			--write-to results
 
 
-
-# Hey Marek! you only need to make changes from here down. The below is the template. Still looking for a command to automatically copy html to docs folder as index.html so we can render it to be landing page
+#Still looking for a command to automatically copy html to docs folder as index.html so we can render it to be landing page
 
 # build HTML report and copy build to docs folder
 reports/heart_diagnostic_analysis.html reports/heart_diagnostic_analysis.pdf : reports/heart_diagnostic_analysis.qmd \
@@ -71,19 +70,21 @@ results/tables/model_metrics.csv
 # clean up analysis / nuke everything
 clean :
 	rm -rf data/raw/*
-	rm -rf data/logs/validation_errors.log \
-			data/processed/cleaned_data.csv
-	rm -rf results/figures/eda1.png \
-			results/figures/eda2.png \
-			results/figures/eda3.png \
-			results/figures/eda4.png \
-			results/figures/eda5.png \
-			results/figures/eda6.png
-	rm -rf data/processed/X_test.csv \
-			data/processed/y_test.csv \
-			results/models/model.pickle
-	rm -rf results/figures/cm.png \
-			results/table/test_score.csv
-	rm -rf report/adult_income_predictor_report.html \
-			report/adult_income_predictor_report.pdf \
-			report/adult_income_predictor_report_files
+# added this. confirm we do want to delete processed data as well :)
+    rm -rf data/processed/* 
+    rm -rf results/figures/categorical_distributions.png \
+            results/figures/confusion_matrix.png \
+            results/figures/correlation_matrix.png \
+            results/figures/numeric_distributions.png 
+    rm -rf results/models/disease_pipeline.pickle
+    rm -rf results/tables/correlation_matrix.csv \
+            results/tables/cross_val_score.csv \
+            results/tables/cross_val_std.csv \
+            results/tables/high_correlations.csv \
+            results/tables/model_metrics.csv \
+ 	rm -rf report/heart_diagnostic_analysis_files.html \
+			report/heart_diagnostic_analysis.pdf \
+			report/heart_diagnostic_analysis           
+
+
+

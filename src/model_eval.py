@@ -35,6 +35,26 @@ def eval_model(model, X_train, y_train, X_test, y_test):
     pandas.DataFrame
         A data frame containing model F1 score, recall and accuracy for train and test data
     """
+    #Check that all input data are data frames
+    if not isinstance(X_train, pd.DataFrame):
+        raise TypeError("X_train Input must be a pandas DataFrame")  
+
+    if not isinstance(y_train, pd.DataFrame):
+        raise TypeError("y_train Input must be a pandas DataFrame")  
+    
+    if not isinstance(X_test, pd.DataFrame):
+        raise TypeError("X_test Input must be a pandas DataFrame")  
+    
+    if not isinstance(y_test, pd.DataFrame):
+        raise TypeError("y_test Input must be a pandas DataFrame")  
+
+    # Make sure both Train and test data contain data   
+    if X_train.empty:
+        raise ValueError("Dataframe must contain observations.")
+    
+    if X_train.empty:
+        raise ValueError("Dataframe must contain observations.")
+    
     train_predictions = model.predict(X_train)
     test_predictions = model.predict(X_test)
     

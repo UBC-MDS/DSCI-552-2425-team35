@@ -1,7 +1,6 @@
 # test_model_eval.py
 # author: Marek Boulerice
 # date: 2024-12-15
-# Attribution: This code was adapted from Tiffany Timbers
 
 import pytest
 import os
@@ -34,23 +33,23 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 #create dummy model to use to test function, and fit model
 dummy = DummyClassifier()
-dummy.fit(X_train, y_train)
-    
+dummy.fit(X_train, y_train)    
 
 
-# Test case 1: given appropriate imput the function outputs a dataframe of correct dimensions
-
-
-# Test Case 2: wrong type passed to function returns an error
+# Test Case 1: wrong type passed to function returns an error
 X_train_as_np = X_train.copy().to_numpy()
 def test_valid_data_type():
     with pytest.raises(TypeError):
         eval_model(dummy, X_train_as_np, y_train, X_test, y_test)
 
-# Test Case 3: empty data frame
+# Test Case 2: empty data frame
 case_empty_data_frame = X_test.copy().iloc[0:0]
 def test_valid_data_empty_data_frame():
     with pytest.raises(ValueError):
         eval_model(dummy, X_train, y_train, case_empty_data_frame, y_test)
+
+# Test case 3: given appropriate imput the function outputs a dataframe of correct dimensions
+def test_success(dummy, X_train, y_train, X_test, y_test):
+    eval_model(dummy, X_train, y_train, X_test, y_test)
 
 

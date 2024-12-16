@@ -1,5 +1,5 @@
 ---
-title: "Creating Machine learning Model to Predict Presence of Coronary Artery Disease"
+title: "Creating A Machine learning Model to Predict Presence of Coronary Artery Disease"
 author: "Long Nguyen, Marek Boulerice, Sarah Eshafi, Hui Tang"
 format: html
 editor: source
@@ -122,7 +122,7 @@ From @fig-cat-dist above, we can see that there is some class imbalance in the t
 Finally, in @fig-cor-mat, we can see that there are correlations in some variables.
 
 
-### 4.2 ML-Analysis
+### 4.2 ML-ANALYSIS
 
 The following section outlines the procedure taken in creating our model and testing it on our data set.
 As this is a classification problem (predict whether the patient has the disease or not), 
@@ -138,7 +138,7 @@ To this effect, we look to maximize Recall.
 
 The framework upon which this analysis is based has been adapted from DSCI573 Lab1.
 
-#### 4.2.1. Data Preprocessing
+#### 4.2.1. DATA PREPROCESSING
 Features are sorted by type, 
 and a column transformer object is created. 
 On categorical columns, simple imputing is applied filling missing values with the most frequently occurring value. 
@@ -146,7 +146,7 @@ One hot encoding is then performed.
 
 For numerical feature, standard scaling is applied to keep all features within the same range.
 
-#### 4.2.2. model creation
+#### 4.2.2. MODEL CREATION
 
 Basic models (default hyperparameter values) are now generated. 
 A dummy model is first created to use as a baseline to use for comparison.
@@ -159,13 +159,13 @@ with accuracy and recall as secondary metrics. This is reflected in the scoring 
 Finally, a Confusion matrix was generated for each model to give an idea of false positive vs false negative rate. 
 
 
-#### 4.2.3. Balanced model testing
+#### 4.2.3. BALANCED MODEL TESTING
 
 Step 4.2.2 is repeated, this time creating balanced logistic regressor and SVC models,
 with all other hyperparameters held the same. Confusion matrices were once again generated to evaluate the types of errors seen.
 The goal of this step is to gain an understanding of how much accuracy is sacrificed at the benefit of improving F1 score.
 
-#### 4.2.4. Model Evaluation and Selection
+#### 4.2.4. MODEL SELECTION AND EVALUATION
 
 With baseline models created, they are evaluated according to the criteria set above.
 CV scores of each model are presented below. 
@@ -188,14 +188,14 @@ Markdown(cv_results_table.to_markdown(index = False))
 ```
 
 
-#### 4.2.5. Hyperparameter optimization
+#### 4.2.5. HYPERPARAMETER OPTIMIZATION
 
 With our final model selected, hyperparameter tuning was done via a random search methodology to find the best value for our C hyperparameter, optimizing for F1 score. The cross-validation scores among the top three models are approximately equivalent. 
 This suggests that the model's performance is relatively stable across the parameter space, 
 indicating that further tuning may not yield substantial improvements. With this C value selected, we proceed to evaluate the final model.
 
 
-#### 4.2.6. Final model Scoring and Evaluation
+#### 4.2.6. FINAL MODEL SCORING AND EVALUATION
 
 With hyperparameters selected the best model is fitted on the training set,
 then scored on both data sets. 

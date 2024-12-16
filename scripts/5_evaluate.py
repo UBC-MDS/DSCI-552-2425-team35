@@ -19,6 +19,13 @@ from src.model_eval import eval_model
 def main(train, test, pipeline, write_to):
     """
     Evaluate a trained model on test data and save evaluation metrics and confusion matrix.
+
+    Usage: 
+    python scripts/5_evaluate.py --train data/processed/train_df.csv \
+                                --test data/processed/test_df.csv \
+                                --pipeline results/models/disease_pipeline.pickle \
+                                --write-to results
+    
     """
 
     # Check if the model file exists

@@ -82,9 +82,9 @@ clean :
 			results/tables/cross_val_std.csv \
 			results/tables/high_correlations.csv \
 			results/tables/model_metrics.csv \
- 	rm -rf reports/heart_diagnostic_analysis_files.html \
-			reports/heart_diagnostic_analysis.pdf \
-			reports/heart_diagnostic_analysis           
+ 	rm -rf reports/heart_diagnostic_analysis.pdf \
+            reports/heart_diagnostic_analysis.html \
+			reports/heart_diagnostic_analysis_files           
 
 
 

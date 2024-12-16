@@ -1,6 +1,7 @@
 # 4_training_models.py
 # author: Long Nguyen
-# date: 2024-12-07
+# date: 2024-12-15
+# Usage: python scripts/4_training_models.py --train data/processed/train_df.csv --seed 123 --write-to results
 
 import numpy as np
 import pandas as pd 
@@ -11,6 +12,7 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import click
+
 from sklearn.exceptions import UndefinedMetricWarning
 from sklearn.utils import parallel_backend
 from sklearn.metrics import ConfusionMatrixDisplay
@@ -31,18 +33,20 @@ warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
 # Suppress UserWarning when transforming test data
 warnings.filterwarnings("ignore", category=UserWarning)
 
+
 @click.command()
 @click.option('--train', type=str, help="Location of train data file")
 @click.option('--seed', type =int, help="Set seed for reproducibility")
 @click.option('--write-to', type=str, help="Path to master directory where outputs will be written")
 
 def main(train, seed, write_to):
-
+    
     # Ensure necessary directories exist
     os.makedirs(os.path.join(write_to, "tables"), exist_ok=True)
     os.makedirs(os.path.join(write_to, "models"), exist_ok=True)
     os.makedirs(os.path.join(write_to, "figures"), exist_ok=True)
 
+    print("Loading train data...")
     # Load train data
     train_data = pd.read_csv(train)
 
@@ -82,11 +86,13 @@ def main(train, seed, write_to):
         "f1": make_scorer(f1_score, pos_label='> 50% diameter narrowing'),
     }
     
+    print("Training models...")
     # 3. Training models
     models = class_model_trainer(preprocessor, X_train, y_train, pos_lable = '> 50% diameter narrowing', 
                         seed=seed, write_to=write_to, 
                         cv = 5, metrics = classification_metrics)
 
+    print("Tuning model...")
     # 4. HYPERPARAMETER OPTIMIZATION
     param_distributions = {'logisticregression__C': np.logspace(-5, 5, 50)}
     custom_scorer = make_scorer(f1_score, pos_label='> 50% diameter narrowing')
@@ -105,6 +111,7 @@ def main(train, seed, write_to):
     # Save the best model
     with open(os.path.join(write_to, "models", "disease_pipeline.pickle"), 'wb') as f:
         pickle.dump(best_model, f)
-
+    print("Best model saved.")
+    
 if __name__ == '__main__':
     main()

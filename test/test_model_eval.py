@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.dummy import DummyClassifier
+from sklearn.datasets import make_classification
 
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))

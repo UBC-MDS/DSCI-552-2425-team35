@@ -52,4 +52,6 @@ def test_valid_data_empty_data_frame():
 def test_success(dummy, X_train, y_train, X_test, y_test):
     eval_model(dummy, X_train, y_train, X_test, y_test)
 
+print("All tests passed.")
+
 

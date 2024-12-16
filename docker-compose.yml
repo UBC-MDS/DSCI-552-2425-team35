@@ -1,7 +1,7 @@
 services:
   # run jupyter notebook inside jupyter 
   jupyter-notebook:
-    image:  piloxita/dsci-522-2425-team35-heart_disease_diagnostic_machine:1c53335
+    image:  piloxita/dsci-522-2425-team35-heart_disease_diagnostic_machine:d065521
     ports:
       - "9999:8888"
     volumes:

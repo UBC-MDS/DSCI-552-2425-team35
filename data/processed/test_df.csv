@@ -1,23 +1,59 @@
 Age (in years),Sex,Chest pain type,Resting blood pressure (in mm Hg on admission to the hospital),Serum cholesterol (in mg/dl),Fasting blood sugar > 120 mg/dl,Resting electrocardiographic results,Maximum heart rate achieved,Exercise-induced angina,ST depression induced by exercise relative to rest,Slope of the peak exercise ST segment,Number of major vessels (0–3) colored by fluoroscopy,Thalassemia,Diagnosis of heart disease
-70,male,asymptomatic,130,322,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,109,no,2.4,flat,3.0,normal,> 50% diameter narrowing
-60,female,non-anginal pain,102,318,False,normal,160,no,0.0,upsloping,1.0,normal,< 50% diameter narrowing
-65,female,non-anginal pain,155,269,False,normal,148,no,0.8,upsloping,0.0,normal,< 50% diameter narrowing
-41,female,atypical angina,130,204,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,172,no,1.4,upsloping,0.0,normal,< 50% diameter narrowing
-54,male,atypical angina,192,283,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,195,no,0.0,upsloping,1.0,reversable defect,> 50% diameter narrowing
-59,male,asymptomatic,135,234,False,normal,161,no,0.5,flat,0.0,reversable defect,< 50% diameter narrowing
-46,male,atypical angina,101,197,True,normal,156,no,0.0,upsloping,0.0,reversable defect,< 50% diameter narrowing
-44,male,asymptomatic,110,197,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,177,no,0.0,upsloping,1.0,normal,> 50% diameter narrowing
-71,female,non-anginal pain,110,265,True,showing probable or definite left ventricular hypertrophy by Estes' criteria,130,no,0.0,upsloping,1.0,normal,< 50% diameter narrowing
-62,male,atypical angina,128,208,True,showing probable or definite left ventricular hypertrophy by Estes' criteria,140,no,0.0,upsloping,0.0,normal,< 50% diameter narrowing
-59,male,typical angina,170,288,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,159,no,0.2,flat,0.0,reversable defect,> 50% diameter narrowing
-57,female,asymptomatic,120,354,False,normal,163,yes,0.6,upsloping,0.0,normal,< 50% diameter narrowing
-47,male,non-anginal pain,138,257,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,156,no,0.0,upsloping,0.0,normal,< 50% diameter narrowing
-62,female,asymptomatic,150,244,False,normal,154,yes,1.4,flat,0.0,normal,> 50% diameter narrowing
-54,female,atypical angina,132,288,True,showing probable or definite left ventricular hypertrophy by Estes' criteria,159,yes,0.0,upsloping,1.0,normal,< 50% diameter narrowing
+64,male,asymptomatic,120,246,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,96,yes,2.2,downsloping,1.0,normal,> 50% diameter narrowing
+56,male,atypical angina,120,236,False,normal,178,no,0.8,upsloping,0.0,normal,< 50% diameter narrowing
+48,male,asymptomatic,122,222,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,186,no,0.0,upsloping,0.0,normal,< 50% diameter narrowing
 46,female,non-anginal pain,142,177,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,160,yes,1.4,downsloping,0.0,normal,< 50% diameter narrowing
-67,male,non-anginal pain,152,212,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,150,no,0.8,flat,0.0,reversable defect,> 50% diameter narrowing
-53,female,asymptomatic,130,264,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,143,no,0.4,flat,0.0,normal,< 50% diameter narrowing
-44,male,atypical angina,130,219,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,188,no,0.0,upsloping,0.0,normal,< 50% diameter narrowing
-74,female,atypical angina,120,269,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,121,yes,0.2,upsloping,1.0,normal,< 50% diameter narrowing
-50,male,non-anginal pain,140,233,False,normal,163,no,0.6,flat,1.0,reversable defect,> 50% diameter narrowing
-57,male,atypical angina,154,232,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,164,no,0.0,upsloping,1.0,normal,> 50% diameter narrowing
+66,male,atypical angina,160,246,False,normal,120,yes,0.0,flat,3.0,fixed defect,> 50% diameter narrowing
+47,male,non-anginal pain,138,257,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,156,no,0.0,upsloping,0.0,normal,< 50% diameter narrowing
+42,male,typical angina,148,244,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,178,no,0.8,upsloping,2.0,normal,< 50% diameter narrowing
+58,male,asymptomatic,146,218,False,normal,105,no,2.0,flat,1.0,reversable defect,> 50% diameter narrowing
+58,male,asymptomatic,128,216,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,131,yes,2.2,flat,3.0,reversable defect,> 50% diameter narrowing
+53,male,asymptomatic,140,203,True,showing probable or definite left ventricular hypertrophy by Estes' criteria,155,yes,3.1,downsloping,0.0,reversable defect,> 50% diameter narrowing
+64,female,non-anginal pain,140,313,False,normal,133,no,0.2,upsloping,0.0,reversable defect,< 50% diameter narrowing
+35,female,asymptomatic,138,183,False,normal,182,no,1.4,upsloping,0.0,normal,< 50% diameter narrowing
+54,male,non-anginal pain,125,273,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,152,no,0.5,downsloping,1.0,normal,< 50% diameter narrowing
+37,male,non-anginal pain,130,250,False,normal,187,no,3.5,downsloping,0.0,normal,< 50% diameter narrowing
+63,female,non-anginal pain,135,252,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,172,no,0.0,upsloping,0.0,normal,< 50% diameter narrowing
+58,male,atypical angina,125,220,False,normal,144,no,0.4,flat,,reversable defect,< 50% diameter narrowing
+61,male,asymptomatic,140,207,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,138,yes,1.9,upsloping,1.0,reversable defect,> 50% diameter narrowing
+59,female,asymptomatic,174,249,False,normal,143,yes,0.0,flat,0.0,normal,> 50% diameter narrowing
+62,male,asymptomatic,120,267,False,normal,99,yes,1.8,flat,2.0,reversable defect,> 50% diameter narrowing
+62,female,asymptomatic,140,268,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,160,no,3.6,downsloping,2.0,normal,> 50% diameter narrowing
+53,female,asymptomatic,138,234,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,160,no,0.0,upsloping,0.0,normal,< 50% diameter narrowing
+38,male,non-anginal pain,138,175,False,normal,173,no,0.0,upsloping,,normal,< 50% diameter narrowing
+58,female,typical angina,150,283,True,showing probable or definite left ventricular hypertrophy by Estes' criteria,162,no,1.0,upsloping,0.0,normal,< 50% diameter narrowing
+71,female,atypical angina,160,302,False,normal,162,no,0.4,upsloping,2.0,normal,< 50% diameter narrowing
+37,female,non-anginal pain,120,215,False,normal,170,no,0.0,upsloping,0.0,normal,< 50% diameter narrowing
+45,male,typical angina,110,264,False,normal,132,no,1.2,flat,0.0,reversable defect,> 50% diameter narrowing
+52,male,non-anginal pain,138,223,False,normal,169,no,0.0,upsloping,,normal,< 50% diameter narrowing
+51,female,non-anginal pain,140,308,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,142,no,1.5,upsloping,1.0,normal,< 50% diameter narrowing
+34,female,atypical angina,118,210,False,normal,192,no,0.7,upsloping,0.0,normal,< 50% diameter narrowing
+57,male,non-anginal pain,128,229,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,150,no,0.4,flat,1.0,reversable defect,> 50% diameter narrowing
+62,female,asymptomatic,150,244,False,normal,154,yes,1.4,flat,0.0,normal,> 50% diameter narrowing
+54,male,asymptomatic,124,266,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,109,yes,2.2,flat,1.0,reversable defect,> 50% diameter narrowing
+63,male,asymptomatic,140,187,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,144,yes,4.0,upsloping,2.0,reversable defect,> 50% diameter narrowing
+61,female,asymptomatic,130,330,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,169,no,0.0,upsloping,0.0,normal,> 50% diameter narrowing
+52,male,atypical angina,128,205,True,normal,184,no,0.0,upsloping,0.0,normal,< 50% diameter narrowing
+58,female,asymptomatic,130,197,False,normal,131,no,0.6,flat,0.0,normal,< 50% diameter narrowing
+61,female,asymptomatic,145,307,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,146,yes,1.0,flat,0.0,reversable defect,> 50% diameter narrowing
+62,female,asymptomatic,160,164,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,145,no,6.2,downsloping,3.0,reversable defect,> 50% diameter narrowing
+57,male,asymptomatic,110,201,False,normal,126,yes,1.5,flat,0.0,fixed defect,< 50% diameter narrowing
+44,male,non-anginal pain,130,233,False,normal,179,yes,0.4,upsloping,0.0,normal,< 50% diameter narrowing
+44,male,atypical angina,120,220,False,normal,170,no,0.0,upsloping,0.0,normal,< 50% diameter narrowing
+44,male,asymptomatic,120,169,False,normal,144,yes,2.8,downsloping,0.0,fixed defect,> 50% diameter narrowing
+65,male,asymptomatic,110,248,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,158,no,0.6,upsloping,2.0,fixed defect,> 50% diameter narrowing
+64,male,non-anginal pain,125,309,False,normal,131,yes,1.8,flat,0.0,reversable defect,> 50% diameter narrowing
+51,male,asymptomatic,140,261,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,186,yes,0.0,upsloping,0.0,normal,< 50% diameter narrowing
+60,male,asymptomatic,145,282,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,142,yes,2.8,flat,2.0,reversable defect,> 50% diameter narrowing
+44,female,non-anginal pain,108,141,False,normal,175,no,0.6,flat,0.0,normal,< 50% diameter narrowing
+41,female,atypical angina,130,204,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,172,no,1.4,upsloping,0.0,normal,< 50% diameter narrowing
+67,female,non-anginal pain,152,277,False,normal,172,no,0.0,upsloping,1.0,normal,< 50% diameter narrowing
+42,male,non-anginal pain,120,240,True,normal,194,no,0.8,downsloping,0.0,reversable defect,< 50% diameter narrowing
+58,male,atypical angina,120,284,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,160,no,1.8,flat,0.0,normal,> 50% diameter narrowing
+62,female,asymptomatic,138,294,True,normal,106,no,1.9,flat,3.0,normal,> 50% diameter narrowing
+48,male,non-anginal pain,124,255,True,normal,175,no,0.0,upsloping,2.0,normal,< 50% diameter narrowing
+57,male,non-anginal pain,150,126,True,normal,173,no,0.2,upsloping,1.0,reversable defect,< 50% diameter narrowing
+55,male,asymptomatic,140,217,False,normal,111,yes,5.6,downsloping,0.0,reversable defect,> 50% diameter narrowing
+42,male,asymptomatic,136,315,False,normal,125,yes,1.8,flat,0.0,fixed defect,> 50% diameter narrowing
+66,male,asymptomatic,120,302,False,showing probable or definite left ventricular hypertrophy by Estes' criteria,151,no,0.4,flat,0.0,normal,< 50% diameter narrowing
+57,male,non-anginal pain,150,168,False,normal,174,no,1.6,upsloping,0.0,normal,< 50% diameter narrowing

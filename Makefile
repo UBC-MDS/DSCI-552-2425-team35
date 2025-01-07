@@ -4,7 +4,9 @@
 
 .PHONY: all clean
 
-all: reports/heart_diagnostic_analysis.html reports/heart_diagnostic_analysis.pdf
+all: reports/heart_diagnostic_analysis.html \
+reports/heart_diagnostic_analysis.pdf \
+docs/index.html
 
 # 1. Download and extract data
 data/raw/pretransformed_heart_disease.csv: scripts/1_download_decode_data.py
@@ -34,10 +36,9 @@ data/processed/train_df.csv
 results/tables/cross_val_std.csv results/tables/cross_val_score.csv results/models/disease_pipeline.pickle: scripts/4_training_models.py \
 data/processed/train_df.csv
 	python scripts/4_training_models.py \
-			--train data/processed/train_df.csv \
-			--seed 123 \
-			--write-to results
-		
+		--train data/processed/train_df.csv \
+		--seed 123 \
+		--write-to results
 
 # 5. Evaluate model
 results/figures/confusion_matrix.png results/tables/model_metrics.csv: scripts/5_evaluate.py \
@@ -45,16 +46,13 @@ data/processed/train_df.csv \
 data/processed/test_df.csv \
 results/models/disease_pipeline.pickle
 	python scripts/5_evaluate.py \
-			--train data/processed/train_df.csv \
-			--test data/processed/test_df.csv \
-			--pipeline results/models/disease_pipeline.pickle \
-			--write-to results
+		--train data/processed/train_df.csv \
+		--test data/processed/test_df.csv \
+		--pipeline results/models/disease_pipeline.pickle \
+		--write-to results
 
-
-#Still looking for a command to automatically copy html to docs folder as index.html so we can render it to be landing page
-
-# build HTML report and copy build to docs folder
-reports/heart_diagnostic_analysis.html reports/heart_diagnostic_analysis.pdf : reports/heart_diagnostic_analysis.qmd \
+# Build HTML report and copy build to docs folder
+reports/heart_diagnostic_analysis.html reports/heart_diagnostic_analysis.pdf: reports/heart_diagnostic_analysis.qmd \
 reports/references.bib \
 results/tables/model_metrics.csv \
 data/processed/train_df.csv \
@@ -62,29 +60,30 @@ results/figures/categorical_distributions.png \
 results/figures/numeric_distributions.png \
 results/figures/correlation_matrix.png \
 results/tables/cross_val_score.csv \
-results/figures/confusion_matrix.png \
-results/tables/model_metrics.csv
+results/figures/confusion_matrix.png
 	quarto render reports/heart_diagnostic_analysis.qmd --to html
-	quarto render reports/heart_diagnostic_analysis.qmd --to pdf
+	quarto render reports/heart_diagnostic_analysis.qmd --to pdf 
 
+# Copy HTML report to docs folder as index.html
+docs/index.html: reports/heart_diagnostic_analysis.html
+	mkdir -p docs
+	cp reports/heart_diagnostic_analysis.html docs/index.html
 
-# clean up analysis
-clean :
+# Clean up analysis
+clean:
 	rm -rf data/raw/*
-	rm -rf data/processed/* 
+	rm -rf data/processed/*
 	rm -rf results/figures/categorical_distributions.png \
-			results/figures/confusion_matrix.png \
-			results/figures/correlation_matrix.png \
-			results/figures/numeric_distributions.png 
+		results/figures/confusion_matrix.png \
+		results/figures/correlation_matrix.png \
+		results/figures/numeric_distributions.png
 	rm -rf results/models/disease_pipeline.pickle
 	rm -rf results/tables/correlation_matrix.csv \
-			results/tables/cross_val_score.csv \
-			results/tables/cross_val_std.csv \
-			results/tables/high_correlations.csv \
-			results/tables/model_metrics.csv \
- 	rm -rf reports/heart_diagnostic_analysis.pdf \
-            reports/heart_diagnostic_analysis.html \
-			reports/heart_diagnostic_analysis_files           
-
-
-
+		results/tables/cross_val_score.csv \
+		results/tables/cross_val_std.csv \
+		results/tables/high_correlations.csv \
+		results/tables/model_metrics.csv
+	rm -rf reports/heart_diagnostic_analysis.pdf \
+		reports/heart_diagnostic_analysis.html \
+        docs/index.html \
+		reports/heart_diagnostic_analysis_files

@@ -1,4 +1,4 @@
 Metric,Train,Test
-F1 Score,0.834,0.851
-Recall,0.822,0.8
-Accuracy,0.858,0.879
+F1 Score,0.842,0.808
+Recall,0.833,0.7
+Accuracy,0.871,0.828
